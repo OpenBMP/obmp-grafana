@@ -1,19 +1,12 @@
 {
   "__inputs": [
     {
-      "name": "DS_PSQL",
-      "label": "psql",
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
       "description": "",
       "type": "datasource",
       "pluginId": "postgres",
       "pluginName": "PostgreSQL"
-    },
-    {
-      "name": "VAR_PREFIX",
-      "type": "constant",
-      "label": "Prefix",
-      "value": "93.181.224.0/20",
-      "description": ""
     }
   ],
   "__requires": [
@@ -21,31 +14,25 @@
       "type": "panel",
       "id": "briangann-datatable-panel",
       "name": "Datatable Panel",
-      "version": "0.0.6"
+      "version": "1.0.3"
     },
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.2.2"
+      "version": "7.4.1"
     },
     {
       "type": "panel",
       "id": "graph",
       "name": "Graph",
-      "version": "5.0.0"
+      "version": ""
     },
     {
       "type": "datasource",
       "id": "postgres",
       "name": "PostgreSQL",
-      "version": "5.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "text",
-      "name": "Text",
-      "version": "5.0.0"
+      "version": "1.0.0"
     }
   ],
   "annotations": {
@@ -65,37 +52,32 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1534274154692,
+  "iteration": 1617141246401,
   "links": [],
   "panels": [
-    {
-      "content": "> An empty list could mean that the prefix is new.   New prefixes are in the active RIB but not the log/history table since it has no changing history. A prefix is in the log when it has history, such as advertisements verses withdraws and with attribute changes. ",
-      "gridPos": {
-        "h": 2,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 5,
-      "links": [],
-      "mode": "markdown",
-      "title": "",
-      "type": "text"
-    },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 11,
         "x": 0,
-        "y": 2
+        "y": 0
       },
+      "hiddenSeries": false,
       "id": 1,
       "legend": {
         "alignAsTable": true,
@@ -113,7 +95,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -125,13 +111,13 @@
         {
           "alias": "",
           "format": "time_series",
-          "hide": false,
-          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) as updates, sum(withdraws) as withdraws\nFROM stats_chg_byprefix s\nWHERE $__timeFilter(interval_time)\n   AND s.prefix = '[[prefix]]'\n\ngroup by interval_time\nORDER BY interval_time ASC\n",
+          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) as updates, sum(withdraws) as withdraws\nFROM stats_chg_bypeer s\nWHERE $__timeFilter(interval_time)\n   AND s.peer_hash_id IN (SELECT peer_hash_id\n                            from v_peers\n                            where routername = '$router')\n\ngroup by interval_time\nORDER BY interval_time ASC\n",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Prefix Advertisements & Withdrawals",
       "tooltip": {
@@ -139,7 +125,6 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "transparent": false,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -176,15 +161,24 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 13,
         "x": 11,
-        "y": 2
+        "y": 0
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "alignAsTable": true,
@@ -194,7 +188,7 @@
         "min": false,
         "rightSide": true,
         "show": true,
-        "sort": "total",
+        "sort": "max",
         "sortDesc": true,
         "total": true,
         "values": true
@@ -203,7 +197,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -215,12 +213,13 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) + sum(withdraws) as value,\n  left(PeerName,32) as metric\nFROM stats_chg_byprefix s\n  JOIN v_peers p ON (s.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n   AND s.prefix = '[[prefix]]'\nGROUP BY s.interval_time,peername\nORDER BY interval_time ASC\n\n",
+          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) + sum(withdraws) as value,\n  left(PeerName,32) as metric\nFROM stats_chg_bypeer l\n  JOIN v_peers p ON (l.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n   AND p.routername = '$router'\nGROUP BY l.interval_time,peername\nORDER BY interval_time ASC\n\n",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Changes by Peer",
       "tooltip": {
@@ -261,18 +260,28 @@
       }
     },
     {
+      "alignNumbersToRightEnabled": true,
+      "columnAliases": [],
+      "columnFiltersEnabled": false,
+      "columnWidthHints": [],
       "columns": [],
       "compactRowsEnabled": false,
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "datatablePagingType": "simple_numbers",
       "datatableTheme": "basic_theme",
       "emptyData": true,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 20,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 7
       },
       "hoverEnabled": true,
       "id": 3,
@@ -306,12 +315,13 @@
           "value": "first_last_numbers"
         }
       ],
-      "panelHeight": 761,
+      "panelHeight": 706,
       "rowNumbersEnabled": false,
       "rowsPerPage": 10,
       "scroll": true,
       "scrollHeight": "default",
       "searchEnabled": true,
+      "searchHighlightingEnabled": false,
       "showCellBorders": false,
       "showHeader": true,
       "showRowBorders": true,
@@ -319,14 +329,29 @@
         "col": 0,
         "desc": true
       },
+      "sortByColumns": [
+        {
+          "$$hashKey": "object:874",
+          "columnData": 0,
+          "sortMethod": "desc"
+        }
+      ],
+      "sortByColumnsData": [
+        [
+          0,
+          "desc"
+        ]
+      ],
       "stripedRowsEnabled": true,
       "styles": [
         {
+          "$$hashKey": "object:876",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "date"
         },
         {
+          "$$hashKey": "object:877",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -335,6 +360,7 @@
           ],
           "decimals": 0,
           "pattern": "/.*/",
+          "splitPattern": "/ /",
           "thresholds": [],
           "type": "string",
           "unit": "none"
@@ -344,9 +370,30 @@
         {
           "alias": "",
           "format": "table",
+          "group": [],
           "hide": false,
-          "rawSql": " select lastmodified,event,routername,peername,prefix,\n        origin_as,as_path,communities \n    from v_ip_routes_history \n    where  $__timeFilter(lastmodified)\n      AND prefix = '[[prefix]]'\n      \n    order by lastmodified desc,id desc\n    limit 1000;",
-          "refId": "A"
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": " select lastmodified,event,peername,prefix,\n        origin_as,as_path,communities \n    from v_ip_routes_history \n    where  $__timeFilter(lastmodified)\n      AND routername = '[[router]]'\n    order by lastmodified desc,id desc\n    limit 5000;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "themeOptions": {
@@ -355,21 +402,25 @@
       },
       "themes": [
         {
+          "$$hashKey": "object:911",
           "disabled": false,
           "text": "Basic",
           "value": "basic_theme"
         },
         {
+          "$$hashKey": "object:912",
           "disabled": true,
           "text": "Bootstrap",
           "value": "bootstrap_theme"
         },
         {
+          "$$hashKey": "object:913",
           "disabled": true,
           "text": "Foundation",
           "value": "foundation_theme"
         },
         {
+          "$$hashKey": "object:914",
           "disabled": true,
           "text": "ThemeRoller",
           "value": "themeroller_theme"
@@ -380,27 +431,35 @@
       "type": "briangann-datatable-panel"
     }
   ],
-  "schemaVersion": 16,
+  "refresh": false,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
-        "current": {
-          "value": "${VAR_PREFIX}",
-          "text": "${VAR_PREFIX}"
-        },
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_POSTGRESQL}",
+        "definition": "",
+        "description": null,
+        "error": null,
         "hide": 0,
-        "label": "Prefix",
-        "name": "prefix",
-        "options": [
-          {
-            "value": "${VAR_PREFIX}",
-            "text": "${VAR_PREFIX}"
-          }
-        ],
-        "query": "${VAR_PREFIX}",
-        "type": "constant"
+        "includeAll": false,
+        "label": "Router",
+        "multi": false,
+        "name": "router",
+        "options": [],
+        "query": "select name from routers",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
@@ -434,7 +493,7 @@
     ]
   },
   "timezone": "",
-  "title": "Prefix History (by Prefix)",
-  "uid": "vCRvHSFiz",
-  "version": 6
+  "title": "Prefix History (by Router)",
+  "uid": "75_Cyedmk",
+  "version": 2
 }

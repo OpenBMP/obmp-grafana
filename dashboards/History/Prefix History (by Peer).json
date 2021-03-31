@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_PSQL",
-      "label": "psql",
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
       "description": "",
       "type": "datasource",
       "pluginId": "postgres",
@@ -14,25 +14,25 @@
       "type": "panel",
       "id": "briangann-datatable-panel",
       "name": "Datatable Panel",
-      "version": "0.0.6"
+      "version": "1.0.3"
     },
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.2.4"
+      "version": "7.4.1"
     },
     {
       "type": "panel",
       "id": "graph",
       "name": "Graph",
-      "version": "5.0.0"
+      "version": ""
     },
     {
       "type": "datasource",
       "id": "postgres",
       "name": "PostgreSQL",
-      "version": "5.0.0"
+      "version": "1.0.0"
     }
   ],
   "annotations": {
@@ -52,7 +52,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1539360007626,
+  "iteration": 1617141226984,
   "links": [],
   "panels": [
     {
@@ -60,15 +60,24 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 11,
         "x": 0,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 1,
       "legend": {
         "alignAsTable": true,
@@ -86,7 +95,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -104,6 +117,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Prefix Advertisements & Withdrawals",
       "tooltip": {
@@ -111,7 +125,6 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "transparent": false,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -148,15 +161,24 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 13,
         "x": 11,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "alignAsTable": true,
@@ -175,7 +197,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -193,6 +219,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Changes by Peer",
       "tooltip": {
@@ -233,12 +260,22 @@
       }
     },
     {
+      "alignNumbersToRightEnabled": true,
+      "columnAliases": [],
+      "columnFiltersEnabled": false,
+      "columnWidthHints": [],
       "columns": [],
       "compactRowsEnabled": false,
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "datatablePagingType": "simple_numbers",
       "datatableTheme": "basic_theme",
-      "emptyData": true,
+      "emptyData": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 20,
@@ -278,12 +315,13 @@
           "value": "first_last_numbers"
         }
       ],
-      "panelHeight": 761,
+      "panelHeight": 706,
       "rowNumbersEnabled": false,
       "rowsPerPage": 10,
       "scroll": true,
       "scrollHeight": "default",
       "searchEnabled": true,
+      "searchHighlightingEnabled": false,
       "showCellBorders": false,
       "showHeader": true,
       "showRowBorders": true,
@@ -291,6 +329,18 @@
         "col": 0,
         "desc": true
       },
+      "sortByColumns": [
+        {
+          "columnData": 0,
+          "sortMethod": "desc"
+        }
+      ],
+      "sortByColumnsData": [
+        [
+          0,
+          "desc"
+        ]
+      ],
       "stripedRowsEnabled": true,
       "styles": [
         {
@@ -307,6 +357,7 @@
           ],
           "decimals": 0,
           "pattern": "/.*/",
+          "splitPattern": "/ /",
           "thresholds": [],
           "type": "string",
           "unit": "none"
@@ -316,9 +367,30 @@
         {
           "alias": "",
           "format": "table",
+          "group": [],
           "hide": false,
-          "rawSql": " select lastmodified,event,routername,peername,prefix,\n        origin_as,as_path,communities \n    from v_ip_routes_history \n    where  $__timeFilter(lastmodified)\n      AND peername = '$peer_name'\n    order by lastmodified desc,id desc\n    limit 1000;",
-          "refId": "A"
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": " select lastmodified,event,routername,peername,prefix,\n        origin_as,nh,as_path,communities \n    from v_ip_routes_history \n    where  $__timeFilter(lastmodified)\n      AND peername = '$peer_name'\n    order by lastmodified desc,id desc\n    limit 1000;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "themeOptions": {
@@ -352,7 +424,7 @@
       "type": "briangann-datatable-panel"
     }
   ],
-  "schemaVersion": 16,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -360,7 +432,10 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PSQL}",
+        "datasource": "${DS_POSTGRESQL}",
+        "definition": "",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Router",
@@ -370,6 +445,7 @@
         "query": "select distinct routername from v_peers",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
@@ -380,7 +456,10 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PSQL}",
+        "datasource": "${DS_POSTGRESQL}",
+        "definition": "",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Peer",
@@ -390,6 +469,7 @@
         "query": "select peername from v_peers where routername = '[[router_name]]'",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
@@ -431,5 +511,5 @@
   "timezone": "",
   "title": "Prefix History (by Peer)",
   "uid": "T1BOSIKmk",
-  "version": 2
+  "version": 1
 }

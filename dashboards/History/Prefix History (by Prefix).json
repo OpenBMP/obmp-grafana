@@ -1,19 +1,12 @@
 {
   "__inputs": [
     {
-      "name": "DS_PSQL",
-      "label": "psql",
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
       "description": "",
       "type": "datasource",
       "pluginId": "postgres",
       "pluginName": "PostgreSQL"
-    },
-    {
-      "name": "VAR_ORIGIN_AS",
-      "type": "constant",
-      "label": "Origin ASN",
-      "value": "16509",
-      "description": ""
     }
   ],
   "__requires": [
@@ -21,25 +14,31 @@
       "type": "panel",
       "id": "briangann-datatable-panel",
       "name": "Datatable Panel",
-      "version": "0.0.6"
+      "version": "1.0.3"
     },
     {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.2.2"
+      "version": "7.4.1"
     },
     {
       "type": "panel",
       "id": "graph",
       "name": "Graph",
-      "version": "5.0.0"
+      "version": ""
     },
     {
       "type": "datasource",
       "id": "postgres",
       "name": "PostgreSQL",
-      "version": "5.0.0"
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "table-old",
+      "name": "Table (old)",
+      "version": ""
     }
   ],
   "annotations": {
@@ -59,23 +58,106 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1534274133371,
+  "iteration": 1617141237633,
   "links": [],
   "panels": [
+    {
+      "columns": [],
+      "datasource": "${DS_POSTGRESQL}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 5,
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select lastmodified,CASE WHEN iswithdrawn THEN 'Withdrawn' ELSE 'Active' END as state,routername,peername,prefix,prefixlen,\n        origin_as,med,localpref,nh,as_path,communities \n    from v_ip_routes \n    where prefix = '[[prefix]]'\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Current RIB State",
+      "transform": "table",
+      "type": "table-old"
+    },
     {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 11,
         "x": 0,
-        "y": 0
+        "y": 6
       },
+      "hiddenSeries": false,
       "id": 1,
       "legend": {
         "alignAsTable": true,
@@ -93,7 +175,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -105,12 +191,35 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) as updates, sum(withdraws) as withdraws\nFROM stats_chg_byasn s\nWHERE $__timeFilter(interval_time)\n   AND s.origin_as = [[origin_as]]\n\ngroup by interval_time\nORDER BY interval_time ASC\n",
-          "refId": "A"
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) as updates, sum(withdraws) as withdraws\nFROM stats_chg_byprefix s\nWHERE $__timeFilter(interval_time)\n   AND s.prefix = '[[prefix]]'\n\ngroup by interval_time\nORDER BY interval_time ASC\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Prefix Advertisements & Withdrawals",
       "tooltip": {
@@ -118,7 +227,6 @@
         "sort": 0,
         "value_type": "individual"
       },
-      "transparent": false,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -155,15 +263,24 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 13,
         "x": 11,
-        "y": 0
+        "y": 6
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "alignAsTable": true,
@@ -182,7 +299,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -194,12 +315,13 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) + sum(withdraws) as value,\n  left(PeerName,32) as metric\nFROM stats_chg_byasn l\n  JOIN v_peers p ON (l.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n   AND l.origin_as = [[origin_as]]\nGROUP BY l.interval_time,peername\nORDER BY interval_time ASC\n\n",
+          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) + sum(withdraws) as value,\n  left(PeerName,32) as metric\nFROM stats_chg_byprefix s\n  JOIN v_peers p ON (s.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n   AND s.prefix = '[[prefix]]'\nGROUP BY s.interval_time,peername\nORDER BY interval_time ASC\n\n",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Changes by Peer",
       "tooltip": {
@@ -240,18 +362,28 @@
       }
     },
     {
+      "alignNumbersToRightEnabled": true,
+      "columnAliases": [],
+      "columnFiltersEnabled": false,
+      "columnWidthHints": [],
       "columns": [],
       "compactRowsEnabled": false,
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "datatablePagingType": "simple_numbers",
       "datatableTheme": "basic_theme",
-      "emptyData": false,
+      "emptyData": true,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 20,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 13
       },
       "hoverEnabled": true,
       "id": 3,
@@ -285,12 +417,13 @@
           "value": "first_last_numbers"
         }
       ],
-      "panelHeight": 761,
+      "panelHeight": 706,
       "rowNumbersEnabled": false,
       "rowsPerPage": 10,
       "scroll": true,
       "scrollHeight": "default",
       "searchEnabled": true,
+      "searchHighlightingEnabled": false,
       "showCellBorders": false,
       "showHeader": true,
       "showRowBorders": true,
@@ -298,6 +431,18 @@
         "col": 0,
         "desc": true
       },
+      "sortByColumns": [
+        {
+          "columnData": 0,
+          "sortMethod": "desc"
+        }
+      ],
+      "sortByColumnsData": [
+        [
+          0,
+          "desc"
+        ]
+      ],
       "stripedRowsEnabled": true,
       "styles": [
         {
@@ -314,6 +459,7 @@
           ],
           "decimals": 0,
           "pattern": "/.*/",
+          "splitPattern": "/ /",
           "thresholds": [],
           "type": "string",
           "unit": "none"
@@ -323,9 +469,30 @@
         {
           "alias": "",
           "format": "table",
+          "group": [],
           "hide": false,
-          "rawSql": " select lastmodified,event,routername,peername,prefix,\n        origin_as,as_path,communities \n    from v_ip_routes_history \n    where  $__timeFilter(lastmodified)\n      AND origin_as = [[origin_as]]\n      \n    order by lastmodified desc,id desc\n    limit 1000;",
-          "refId": "A"
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": " select lastmodified,event,routername,peername,prefix,nh,\n        origin_as,as_path,communities \n    from v_ip_routes_history \n    where  $__timeFilter(lastmodified)\n      AND prefix = '[[prefix]]'\n      \n    order by lastmodified desc,id desc\n    limit 1000;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "themeOptions": {
@@ -359,32 +526,38 @@
       "type": "briangann-datatable-panel"
     }
   ],
-  "schemaVersion": 16,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "value": "${VAR_ORIGIN_AS}",
-          "text": "${VAR_ORIGIN_AS}"
+          "selected": true,
+          "text": "66.114.160.0/20",
+          "value": "66.114.160.0/20"
         },
+        "description": null,
+        "error": null,
         "hide": 0,
-        "label": "Origin ASN",
-        "name": "origin_as",
+        "label": "Prefix",
+        "name": "prefix",
         "options": [
           {
-            "value": "${VAR_ORIGIN_AS}",
-            "text": "${VAR_ORIGIN_AS}"
+            "selected": true,
+            "text": "66.114.160.0/20",
+            "value": "66.114.160.0/20"
           }
         ],
-        "query": "${VAR_ORIGIN_AS}",
-        "type": "constant"
+        "query": "66.114.160.0/20",
+        "queryValue": "67.211.53.0/24",
+        "skipUrlSync": false,
+        "type": "textbox"
       }
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -413,7 +586,7 @@
     ]
   },
   "timezone": "",
-  "title": "Prefix History (by ASN)",
-  "uid": "lfGwISKiz",
-  "version": 4
+  "title": "Prefix History (by Prefix)",
+  "uid": "vCRvHSFiz",
+  "version": 2
 }

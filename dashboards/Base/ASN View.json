@@ -1,8 +1,8 @@
 {
   "__inputs": [
     {
-      "name": "DS_PSQL",
-      "label": "psql",
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
       "description": "",
       "type": "datasource",
       "pluginId": "postgres",
@@ -11,46 +11,40 @@
   ],
   "__requires": [
     {
-      "type": "panel",
-      "id": "briangann-datatable-panel",
-      "name": "Datatable Panel",
-      "version": "0.0.6"
-    },
-    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.2.2"
+      "version": "7.4.1"
     },
     {
       "type": "panel",
       "id": "grafana-piechart-panel",
       "name": "Pie Chart",
-      "version": "1.3.3"
+      "version": "1.6.1"
     },
     {
       "type": "panel",
       "id": "graph",
       "name": "Graph",
-      "version": "5.0.0"
+      "version": ""
     },
     {
       "type": "datasource",
       "id": "postgres",
       "name": "PostgreSQL",
-      "version": "5.0.0"
+      "version": "1.0.0"
     },
     {
       "type": "panel",
       "id": "singlestat",
       "name": "Singlestat",
-      "version": "5.0.0"
+      "version": ""
     },
     {
       "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": "5.0.0"
+      "id": "table-old",
+      "name": "Table (old)",
+      "version": ""
     }
   ],
   "annotations": {
@@ -70,7 +64,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1534355461375,
+  "iteration": 1617141091714,
   "links": [],
   "panels": [
     {
@@ -81,8 +75,14 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "80%",
       "format": "none",
       "gridPos": {
@@ -130,7 +130,13 @@
         "#64b0c8",
         "#d44a3a"
       ],
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -179,7 +185,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "count",
+      "tableColumn": "",
       "targets": [
         {
           "alias": "",
@@ -207,15 +213,24 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
       "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 8,
         "w": 15,
         "x": 9,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 14,
       "legend": {
         "alignAsTable": true,
@@ -236,7 +251,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.4.1",
       "pointradius": 5,
       "points": true,
       "renderer": "flot",
@@ -254,6 +273,7 @@
       ],
       "thresholds": [],
       "timeFrom": "24h",
+      "timeRegions": [],
       "timeShift": null,
       "title": "Originating Prefix Trend",
       "tooltip": {
@@ -302,7 +322,13 @@
         "#6ed0e0",
         "#d44a3a"
       ],
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -351,7 +377,7 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "count",
+      "tableColumn": "",
       "targets": [
         {
           "alias": "",
@@ -376,7 +402,13 @@
     },
     {
       "columns": [],
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 7,
@@ -395,13 +427,29 @@
       },
       "styles": [
         {
-          "alias": "Time",
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "date"
+          "decimals": 0,
+          "link": true,
+          "linkTargetBlank": true,
+          "linkTooltip": "Click to see ASN history",
+          "linkUrl": "http://grafana.tim.syd.infra.webex.com:3000/d/lfGwISKiz/prefix-history-by-asn?var-origin_as=$asn_num",
+          "mappingType": 1,
+          "pattern": "as_name",
+          "thresholds": [],
+          "type": "number",
+          "unit": "none"
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -420,22 +468,49 @@
         {
           "alias": "",
           "format": "table",
+          "group": [],
           "hide": false,
-          "rawSql": "select as_name,org_id,org_name,address,city,state_prov,country,remarks,raw_output,source \n  from info_asn i \n  where asn = [[asn_num]]",
-          "refId": "A"
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select as_name,org_id,org_name,address,city,state_prov,country,remarks,raw_output,source\n  from info_asn i \n  where asn = [[asn_num]]",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "title": "ASN Info",
       "transform": "table",
-      "type": "table"
+      "type": "table-old"
     },
     {
       "columns": [],
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 9,
-        "w": 12,
+        "w": 17,
         "x": 0,
         "y": 15
       },
@@ -451,12 +526,14 @@
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "date"
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -473,6 +550,7 @@
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -497,16 +575,22 @@
       ],
       "title": "Upstream ASNs",
       "transform": "table",
-      "type": "table"
+      "type": "table-old"
     },
     {
       "columns": [],
-      "datasource": "${DS_PSQL}",
+      "datasource": "${DS_POSTGRESQL}",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
+        "w": 7,
+        "x": 17,
         "y": 15
       },
       "id": 9,
@@ -521,12 +605,14 @@
       "styles": [
         {
           "alias": "Time",
+          "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "date"
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -543,6 +629,7 @@
         },
         {
           "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -567,16 +654,18 @@
       ],
       "title": "Downstream ASNs",
       "transform": "table",
-      "type": "table"
+      "type": "table-old"
     },
     {
       "columns": [],
-      "compactRowsEnabled": false,
-      "datasource": "${DS_PSQL}",
-      "datatablePagingType": "simple_numbers",
-      "datatableTheme": "basic_theme",
+      "datasource": "${DS_POSTGRESQL}",
       "description": "",
-      "emptyData": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 15,
@@ -584,59 +673,19 @@
         "x": 0,
         "y": 24
       },
-      "hoverEnabled": true,
       "id": 4,
-      "infoEnabled": true,
-      "lengthChangeEnabled": true,
       "links": [],
-      "orderColumnEnabled": true,
-      "pagingTypes": [
-        {
-          "text": "Page number buttons only",
-          "value": "numbers"
-        },
-        {
-          "text": "'Previous' and 'Next' buttons only",
-          "value": "simple"
-        },
-        {
-          "text": "'Previous' and 'Next' buttons, plus page numbers",
-          "value": "simple_numbers"
-        },
-        {
-          "text": "'First', 'Previous', 'Next' and 'Last' buttons",
-          "value": "full"
-        },
-        {
-          "text": "'First', 'Previous', 'Next' and 'Last' buttons, plus page numbers",
-          "value": "full_numbers"
-        },
-        {
-          "text": "'First' and 'Last' buttons, plus page numbers",
-          "value": "first_last_numbers"
-        }
-      ],
-      "panelHeight": 561,
-      "rowNumbersEnabled": true,
-      "rowsPerPage": 5,
-      "scroll": true,
-      "scrollHeight": "default",
-      "searchEnabled": true,
-      "showCellBorders": false,
+      "pageSize": null,
       "showHeader": true,
-      "showRowBorders": true,
       "sort": {
         "col": 0,
         "desc": true
       },
-      "stripedRowsEnabled": true,
       "styles": [
         {
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "pattern": "Time",
-          "type": "date"
-        },
-        {
+          "$$hashKey": "object:488",
+          "alias": "",
+          "align": "auto",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -644,6 +693,27 @@
             "rgba(50, 172, 45, 0.97)"
           ],
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": true,
+          "linkTargetBlank": true,
+          "linkTooltip": "Click for Prefix History",
+          "linkUrl": "/grafana/d/vCRvHSFiz/prefix-history-by-prefix?orgId=1&var-prefix=${__cell}",
+          "mappingType": 1,
+          "pattern": "Prefix",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short"
+        },
+        {
+          "$$hashKey": "object:489",
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
           "decimals": 2,
           "pattern": "/.*/",
           "thresholds": [],
@@ -655,42 +725,37 @@
         {
           "alias": "",
           "format": "table",
-          "rawSql": "SELECT r.prefix as \"Prefix\",g.rpki_origin_as AS \"RPKI Origin AS\",i.origin_as as \"IRR Origin AS\",\"Last Change\", i.descr as \"IRR Description\", i.source as \"IRR Source\"\n\nFROM (\n      select\n        prefix,\n        max(timestamp) as \"Last Change\"\n      FROM global_ip_rib\n      WHERE recv_origin_as = [[asn_num]]\n      GROUP BY prefix\n  ) r\n  LEFT JOIN info_route i ON (i.prefix = r.prefix)\n  LEFT JOIN global_ip_rib g ON (g.prefix = r.prefix)\n\n\n",
-          "refId": "A"
-        }
-      ],
-      "themeOptions": {
-        "dark": "./css/datatable-dark.css",
-        "light": "./css/datatable-light.css"
-      },
-      "themes": [
-        {
-          "disabled": false,
-          "text": "Basic",
-          "value": "basic_theme"
-        },
-        {
-          "disabled": true,
-          "text": "Bootstrap",
-          "value": "bootstrap_theme"
-        },
-        {
-          "disabled": true,
-          "text": "Foundation",
-          "value": "foundation_theme"
-        },
-        {
-          "disabled": true,
-          "text": "ThemeRoller",
-          "value": "themeroller_theme"
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT r.prefix as \"Prefix\",r.rpki_origin_as AS \"RPKI Origin AS\",i.origin_as as \"IRR Origin AS\",\"Last Change\", i.descr as \"IRR Description\", i.source as \"IRR Source\"\n\nFROM (\n      select\n        prefix,rpki_origin_as,\n        max(timestamp) as \"Last Change\"\n      FROM global_ip_rib\n      WHERE recv_origin_as = [[asn_num]]\n      GROUP BY prefix,rpki_origin_as\n  ) r\n  LEFT JOIN info_route i ON (i.prefix = r.prefix)\n\n\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
         }
       ],
       "title": "Advertised Prefixes (multiple shown for all IRR entries)",
       "transform": "table",
-      "type": "briangann-datatable-panel"
+      "type": "table-old"
     }
   ],
-  "schemaVersion": 16,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -698,9 +763,11 @@
       {
         "allValue": null,
         "current": {
-          "text": "3356",
-          "value": "3356"
+          "text": "13445",
+          "value": "13445"
         },
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "ASN",
@@ -708,12 +775,14 @@
         "name": "asn_num",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "109",
             "value": "109"
           }
         ],
         "query": "109",
+        "queryValue": "22003",
+        "skipUrlSync": false,
         "type": "custom"
       }
     ]
@@ -750,5 +819,5 @@
   "timezone": "",
   "title": "ASN View",
   "uid": "CRZaPcFik",
-  "version": 21
+  "version": 2
 }
