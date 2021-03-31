@@ -1,4 +1,40 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_POSTGRESQL",
+      "label": "PostgreSQL",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "dashlist",
+      "name": "Dashboard list",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.1.5"
+    },
+    {
+      "type": "datasource",
+      "id": "postgres",
+      "name": "PostgreSQL",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": "7.1.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -7,7 +43,9 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
+        "limit": 100,
         "name": "Annotations & Alerts",
+        "showIn": 0,
         "type": "dashboard"
       }
     ]
@@ -15,13 +53,16 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 5,
+  "id": null,
   "links": [],
   "panels": [
     {
       "datasource": "${DS_POSTGRESQL}",
+      "description": "",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "custom": {}
+        },
         "overrides": []
       },
       "gridPos": {
@@ -33,25 +74,31 @@
       "id": 6,
       "links": [],
       "options": {
-        "content": "# Client Network Information Service (CNIS)\n\n*Select a dashboard*",
+        "content": "# OpenBMP\n\n*Select a dashboard*",
         "mode": "markdown"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "7.1.0",
+      "title": "",
       "type": "text"
     },
     {
       "datasource": "${DS_POSTGRESQL}",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "custom": {}
+        },
         "overrides": []
       },
+      "folderId": 7,
       "gridPos": {
         "h": 12,
         "w": 6,
         "x": 0,
         "y": 3
       },
+      "headings": true,
       "id": 2,
+      "limit": 10,
       "links": [],
       "options": {
         "folderId": 8,
@@ -64,6 +111,10 @@
         "tags": []
       },
       "pluginVersion": "7.5.1",
+      "query": "",
+      "recent": false,
+      "search": true,
+      "starred": false,
       "tags": [],
       "title": "General",
       "type": "dashlist"
@@ -71,16 +122,21 @@
     {
       "datasource": "${DS_POSTGRESQL}",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "custom": {}
+        },
         "overrides": []
       },
+      "folderId": 1,
       "gridPos": {
         "h": 12,
         "w": 7,
         "x": 6,
         "y": 3
       },
+      "headings": true,
       "id": 4,
+      "limit": 10,
       "links": [],
       "options": {
         "folderId": 1,
@@ -93,6 +149,10 @@
         "tags": []
       },
       "pluginVersion": "7.5.1",
+      "query": "",
+      "recent": false,
+      "search": true,
+      "starred": false,
       "tags": [],
       "title": "Prefix History",
       "type": "dashlist"
@@ -100,16 +160,21 @@
     {
       "datasource": "${DS_POSTGRESQL}",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "custom": {}
+        },
         "overrides": []
       },
+      "folderId": 5,
       "gridPos": {
         "h": 12,
         "w": 5,
         "x": 13,
         "y": 3
       },
+      "headings": true,
       "id": 7,
+      "limit": 10,
       "links": [],
       "options": {
         "folderId": 6,
@@ -122,12 +187,16 @@
         "tags": []
       },
       "pluginVersion": "7.5.1",
+      "query": "",
+      "recent": false,
+      "search": true,
+      "starred": false,
       "tags": [],
       "title": "Tops",
       "type": "dashlist"
     }
   ],
-  "schemaVersion": 27,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -165,5 +234,5 @@
   "timezone": "",
   "title": "Home",
   "uid": "SDsNb3Fiz",
-  "version": 2
+  "version": 9
 }
