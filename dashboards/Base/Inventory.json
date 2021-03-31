@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 9,
+  "id": 13,
   "links": [],
   "panels": [
     {
@@ -26,9 +26,11 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": null,
+      "datasource": "PostgreSQL",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "custom": {}
+        },
         "overrides": []
       },
       "fontSize": "80%",
@@ -57,30 +59,9 @@
         {
           "alias": "",
           "format": "time_series",
-          "group": [],
           "hide": false,
-          "metricColumn": "none",
-          "rawQuery": true,
           "rawSql": "SELECT\n  floor(extract(epoch from max(r.timestamp))) as time,\n  count(distinct router_hash_id) as value,\n  r.state as metric\nFROM routers r\n  JOIN bgp_peers p on (r.hash_id = p.router_hash_id)\n  group by r.state\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
+          "refId": "A"
         }
       ],
       "title": "Router Status",
@@ -94,12 +75,14 @@
       "columnWidthHints": [],
       "columns": [],
       "compactRowsEnabled": false,
-      "datasource": null,
+      "datasource": "PostgreSQL",
       "datatablePagingType": "simple_numbers",
       "datatableTheme": "basic_theme",
       "emptyData": false,
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "custom": {}
+        },
         "overrides": []
       },
       "fontSize": "100%",
@@ -141,7 +124,7 @@
           "value": "first_last_numbers"
         }
       ],
-      "panelHeight": 274,
+      "panelHeight": 364,
       "rowNumbersEnabled": false,
       "rowsPerPage": 5,
       "scroll": false,
@@ -157,7 +140,6 @@
       },
       "sortByColumns": [
         {
-          "$$hashKey": "object:284",
           "columnData": 0,
           "sortMethod": "desc"
         }
@@ -171,13 +153,11 @@
       "stripedRowsEnabled": true,
       "styles": [
         {
-          "$$hashKey": "object:286",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "date"
         },
         {
-          "$$hashKey": "object:287",
           "colorMode": "row",
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -197,7 +177,6 @@
           "unit": "none"
         },
         {
-          "$$hashKey": "object:288",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -217,30 +196,9 @@
         {
           "alias": "",
           "format": "table",
-          "group": [],
           "hide": false,
-          "metricColumn": "none",
-          "rawQuery": true,
           "rawSql": "select max(r.timestamp) as timestamp,r.name,max(ip_address) as ip_address,max(r.state) as state,\n    count(*) as peers,max(description) as description, CASE WHEN max(r.state) = 'up' THEN 1 ELSE 0 END as stateBool\n  from routers r\n  JOIN bgp_peers p on (r.hash_id = p.router_hash_id)\n  GROUP BY r.name;",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
+          "refId": "A"
         }
       ],
       "themeOptions": {
@@ -281,9 +239,11 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "custom": {}
+        },
         "overrides": []
       },
       "fontSize": "80%",
@@ -328,12 +288,14 @@
       "columnWidthHints": [],
       "columns": [],
       "compactRowsEnabled": false,
-      "datasource": null,
+      "datasource": "PostgreSQL",
       "datatablePagingType": "simple_numbers",
       "datatableTheme": "basic_theme",
-      "emptyData": true,
+      "emptyData": false,
       "fieldConfig": {
-        "defaults": {},
+        "defaults": {
+          "custom": {}
+        },
         "overrides": []
       },
       "fontSize": "100%",
@@ -351,37 +313,31 @@
       "orderColumnEnabled": true,
       "pagingTypes": [
         {
-          "$$hashKey": "object:1170",
           "text": "Page number buttons only",
           "value": "numbers"
         },
         {
-          "$$hashKey": "object:1171",
           "text": "'Previous' and 'Next' buttons only",
           "value": "simple"
         },
         {
-          "$$hashKey": "object:1172",
           "text": "'Previous' and 'Next' buttons, plus page numbers",
           "value": "simple_numbers"
         },
         {
-          "$$hashKey": "object:1173",
           "text": "'First', 'Previous', 'Next' and 'Last' buttons",
           "value": "full"
         },
         {
-          "$$hashKey": "object:1174",
           "text": "'First', 'Previous', 'Next' and 'Last' buttons, plus page numbers",
           "value": "full_numbers"
         },
         {
-          "$$hashKey": "object:1175",
           "text": "'First' and 'Last' buttons, plus page numbers",
           "value": "first_last_numbers"
         }
       ],
-      "panelHeight": 274,
+      "panelHeight": 478,
       "rowNumbersEnabled": false,
       "rowsPerPage": 30,
       "scroll": false,
@@ -397,7 +353,6 @@
       },
       "sortByColumns": [
         {
-          "$$hashKey": "object:1061",
           "columnData": 0,
           "sortMethod": "desc"
         }
@@ -411,13 +366,11 @@
       "stripedRowsEnabled": true,
       "styles": [
         {
-          "$$hashKey": "object:1063",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "date"
         },
         {
-          "$$hashKey": "object:1064",
           "colorMode": "row",
           "colors": [
             "rgba(245, 170, 54, 0.9)",
@@ -434,7 +387,6 @@
           "unit": "none"
         },
         {
-          "$$hashKey": "object:1065",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -485,25 +437,21 @@
       },
       "themes": [
         {
-          "$$hashKey": "object:1151",
           "disabled": false,
           "text": "Basic",
           "value": "basic_theme"
         },
         {
-          "$$hashKey": "object:1152",
           "disabled": true,
           "text": "Bootstrap",
           "value": "bootstrap_theme"
         },
         {
-          "$$hashKey": "object:1153",
           "disabled": true,
           "text": "Foundation",
           "value": "foundation_theme"
         },
         {
-          "$$hashKey": "object:1154",
           "disabled": true,
           "text": "ThemeRoller",
           "value": "themeroller_theme"
@@ -552,5 +500,5 @@
   "timezone": "utc",
   "title": "Inventory",
   "uid": "000000011",
-  "version": 2
+  "version": 3
 }

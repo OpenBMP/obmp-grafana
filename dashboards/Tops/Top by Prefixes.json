@@ -1,34 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_POSTGRESQL",
-      "label": "PostgreSQL",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "postgres",
-      "pluginName": "PostgreSQL"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "7.4.1"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "postgres",
-      "name": "PostgreSQL",
-      "version": "1.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -45,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1617141308433,
+  "id": 6,
+  "iteration": 1617209346069,
   "links": [],
   "panels": [
     {
@@ -54,7 +24,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -155,7 +125,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -258,7 +228,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -360,7 +330,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -462,7 +432,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -564,7 +534,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -669,7 +639,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -777,8 +747,12 @@
     "list": [
       {
         "allValue": "",
-        "current": {},
-        "datasource": "${DS_POSTGRESQL}",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "PostgreSQL",
         "definition": "",
         "description": null,
         "error": null,

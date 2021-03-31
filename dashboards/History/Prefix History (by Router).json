@@ -1,40 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_POSTGRESQL",
-      "label": "PostgreSQL",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "postgres",
-      "pluginName": "PostgreSQL"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "briangann-datatable-panel",
-      "name": "Datatable Panel",
-      "version": "1.0.3"
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "7.4.1"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "postgres",
-      "name": "PostgreSQL",
-      "version": "1.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -51,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1617141246401,
+  "id": 7,
+  "iteration": 1617209333284,
   "links": [],
   "panels": [
     {
@@ -60,7 +24,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -161,7 +125,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -266,7 +230,7 @@
       "columnWidthHints": [],
       "columns": [],
       "compactRowsEnabled": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "datatablePagingType": "simple_numbers",
       "datatableTheme": "basic_theme",
       "emptyData": true,
@@ -331,7 +295,6 @@
       },
       "sortByColumns": [
         {
-          "$$hashKey": "object:874",
           "columnData": 0,
           "sortMethod": "desc"
         }
@@ -345,13 +308,11 @@
       "stripedRowsEnabled": true,
       "styles": [
         {
-          "$$hashKey": "object:876",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
           "pattern": "Time",
           "type": "date"
         },
         {
-          "$$hashKey": "object:877",
           "colorMode": null,
           "colors": [
             "rgba(245, 54, 54, 0.9)",
@@ -402,25 +363,21 @@
       },
       "themes": [
         {
-          "$$hashKey": "object:911",
           "disabled": false,
           "text": "Basic",
           "value": "basic_theme"
         },
         {
-          "$$hashKey": "object:912",
           "disabled": true,
           "text": "Bootstrap",
           "value": "bootstrap_theme"
         },
         {
-          "$$hashKey": "object:913",
           "disabled": true,
           "text": "Foundation",
           "value": "foundation_theme"
         },
         {
-          "$$hashKey": "object:914",
           "disabled": true,
           "text": "ThemeRoller",
           "value": "themeroller_theme"
@@ -439,8 +396,12 @@
     "list": [
       {
         "allValue": null,
-        "current": {},
-        "datasource": "${DS_POSTGRESQL}",
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
+        "datasource": "PostgreSQL",
         "definition": "",
         "description": null,
         "error": null,

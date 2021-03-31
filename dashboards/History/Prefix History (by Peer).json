@@ -1,40 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_POSTGRESQL",
-      "label": "PostgreSQL",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "postgres",
-      "pluginName": "PostgreSQL"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "briangann-datatable-panel",
-      "name": "Datatable Panel",
-      "version": "1.0.3"
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "7.4.1"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "postgres",
-      "name": "PostgreSQL",
-      "version": "1.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -51,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1617141226984,
+  "id": 9,
+  "iteration": 1617209305182,
   "links": [],
   "panels": [
     {
@@ -60,7 +24,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -161,7 +125,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -266,7 +230,7 @@
       "columnWidthHints": [],
       "columns": [],
       "compactRowsEnabled": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "datatablePagingType": "simple_numbers",
       "datatableTheme": "basic_theme",
       "emptyData": false,
@@ -431,8 +395,12 @@
     "list": [
       {
         "allValue": null,
-        "current": {},
-        "datasource": "${DS_POSTGRESQL}",
+        "current": {
+          "selected": false,
+          "text": "jfk-xrv9k-bmp",
+          "value": "jfk-xrv9k-bmp"
+        },
+        "datasource": "PostgreSQL",
         "definition": "",
         "description": null,
         "error": null,
@@ -455,8 +423,12 @@
       },
       {
         "allValue": null,
-        "current": {},
-        "datasource": "${DS_POSTGRESQL}",
+        "current": {
+          "selected": false,
+          "text": "dfw10-wxbb-crt01.webex.com",
+          "value": "dfw10-wxbb-crt01.webex.com"
+        },
+        "datasource": "PostgreSQL",
         "definition": "",
         "description": null,
         "error": null,

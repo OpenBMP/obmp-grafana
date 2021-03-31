@@ -1,52 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_POSTGRESQL",
-      "label": "PostgreSQL",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "postgres",
-      "pluginName": "PostgreSQL"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "7.4.1"
-    },
-    {
-      "type": "panel",
-      "id": "grafana-piechart-panel",
-      "name": "Pie Chart",
-      "version": "1.6.1"
-    },
-    {
-      "type": "panel",
-      "id": "grafana-worldmap-panel",
-      "name": "Worldmap Panel",
-      "version": "0.3.2"
-    },
-    {
-      "type": "datasource",
-      "id": "postgres",
-      "name": "PostgreSQL",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "table-old",
-      "name": "Table (old)",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "text",
-      "name": "Text",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -63,12 +15,12 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1617141132559,
+  "id": 4,
+  "iteration": 1617209253877,
   "links": [],
   "panels": [
     {
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -99,7 +51,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "esMetric": "Count",
       "fieldConfig": {
@@ -182,7 +134,7 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "description": "Prefix found in router's RIB.",
       "fieldConfig": {
         "defaults": {
@@ -253,7 +205,7 @@
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "description": "Prefix found in peer RIB's",
       "fieldConfig": {
         "defaults": {
@@ -318,7 +270,7 @@
     },
     {
       "columns": [],
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -398,7 +350,7 @@
     },
     {
       "columns": [],
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -520,7 +472,7 @@
     },
     {
       "columns": [],
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -544,7 +496,6 @@
       },
       "styles": [
         {
-          "$$hashKey": "object:765",
           "alias": "Time",
           "align": "auto",
           "dateFormat": "YYYY-MM-DD HH:mm:ss",
@@ -552,7 +503,6 @@
           "type": "date"
         },
         {
-          "$$hashKey": "object:766",
           "alias": "Prefix",
           "align": "auto",
           "colorMode": null,
@@ -574,7 +524,6 @@
           "unit": "short"
         },
         {
-          "$$hashKey": "object:767",
           "alias": "Origin",
           "align": "auto",
           "colorMode": null,
@@ -596,7 +545,6 @@
           "unit": "none"
         },
         {
-          "$$hashKey": "object:768",
           "alias": "",
           "align": "auto",
           "colorMode": null,

@@ -1,46 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_POSTGRESQL",
-      "label": "PostgreSQL",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "postgres",
-      "pluginName": "PostgreSQL"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "briangann-datatable-panel",
-      "name": "Datatable Panel",
-      "version": "1.0.3"
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "7.4.1"
-    },
-    {
-      "type": "panel",
-      "id": "graph",
-      "name": "Graph",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "postgres",
-      "name": "PostgreSQL",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "table-old",
-      "name": "Table (old)",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -57,13 +15,13 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1617141237633,
+  "id": 8,
+  "iteration": 1617209319049,
   "links": [],
   "panels": [
     {
       "columns": [],
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -140,7 +98,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -263,7 +221,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -368,7 +326,7 @@
       "columnWidthHints": [],
       "columns": [],
       "compactRowsEnabled": false,
-      "datasource": "${DS_POSTGRESQL}",
+      "datasource": "PostgreSQL",
       "datatablePagingType": "simple_numbers",
       "datatableTheme": "basic_theme",
       "emptyData": true,
