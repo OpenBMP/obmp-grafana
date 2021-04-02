@@ -27,7 +27,7 @@ providers:
     # <int> Org id. Default to 1
     orgId: 1
     # <string> name of the dashboard folder.
-    folder: 'Base'
+    folder: 'OBMP-Base'
     # <string> folder UID. will be automatically generated if not specified
     folderUid: '1001'
     # <string> provider type. Default to 'file'
@@ -47,7 +47,7 @@ providers:
     # <int> Org id. Default to 1
     orgId: 1
     # <string> name of the dashboard folder.
-    folder: 'History'
+    folder: 'OBMP-History'
     # <string> folder UID. will be automatically generated if not specified
     folderUid: '1002'
     # <string> provider type. Default to 'file'
@@ -67,7 +67,7 @@ providers:
     # <int> Org id. Default to 1
     orgId: 1
     # <string> name of the dashboard folder.
-    folder: 'Tops'
+    folder: 'OBMP-Tops'
     # <string> folder UID. will be automatically generated if not specified
     folderUid: '1003'
     # <string> provider type. Default to 'file'
