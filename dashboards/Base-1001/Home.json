@@ -17,7 +17,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 13,
+  "id": 7,
   "links": [],
   "panels": [
     {
@@ -53,14 +53,14 @@
         },
         "overrides": []
       },
-      "folderId": 7,
+      "folderId": 1001,
       "gridPos": {
         "h": 12,
         "w": 6,
         "x": 0,
         "y": 3
       },
-      "headings": true,
+      "headings": false,
       "id": 2,
       "limit": 10,
       "links": [],
@@ -80,7 +80,7 @@
       "search": true,
       "starred": false,
       "tags": [],
-      "title": "General",
+      "title": "Base",
       "type": "dashlist"
     },
     {
@@ -91,14 +91,14 @@
         },
         "overrides": []
       },
-      "folderId": 1,
+      "folderId": 1002,
       "gridPos": {
         "h": 12,
         "w": 7,
         "x": 6,
         "y": 3
       },
-      "headings": true,
+      "headings": false,
       "id": 4,
       "limit": 10,
       "links": [],
@@ -129,19 +129,19 @@
         },
         "overrides": []
       },
-      "folderId": 5,
+      "folderId": 14,
       "gridPos": {
         "h": 12,
         "w": 5,
         "x": 13,
         "y": 3
       },
-      "headings": true,
+      "headings": false,
       "id": 7,
       "limit": 10,
       "links": [],
       "options": {
-        "folderId": 6,
+        "folderId": 1003,
         "maxItems": 41,
         "query": "",
         "showHeadings": true,
@@ -198,5 +198,5 @@
   "timezone": "",
   "title": "Home",
   "uid": "SDsNb3Fiz",
-  "version": 9
+  "version": 8
 }

@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 5,
-  "iteration": 1617209237864,
+  "iteration": 1617382631384,
   "links": [],
   "panels": [
     {
@@ -516,7 +516,7 @@
           "link": true,
           "linkTargetBlank": true,
           "linkTooltip": "Prefix History ",
-          "linkUrl": "/grafana/d/vCRvHSFiz/prefix-history-by-prefix?orgId=1&var-prefix=${__cell}",
+          "linkUrl": "/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-prefix=${__cell}",
           "mappingType": 1,
           "pattern": "prefix",
           "thresholds": [],
@@ -537,7 +537,7 @@
           "link": true,
           "linkTargetBlank": true,
           "linkTooltip": "ASN View",
-          "linkUrl": "/grafana/d/CRZaPcFik/asn-view?orgId=1&var-asn_num=${__cell}",
+          "linkUrl": "/d/asnview/asn-view?orgId=1&var-asn_num=${__cell}",
           "mappingType": 1,
           "pattern": "origin_as",
           "thresholds": [],
@@ -768,6 +768,6 @@
   },
   "timezone": "",
   "title": "Looking Glass",
-  "uid": "u8FgTcFik",
-  "version": 7
+  "uid": "lookingglass",
+  "version": 9
 }

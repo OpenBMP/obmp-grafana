@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 38,
-  "iteration": 1617209203196,
+  "id": 14,
+  "iteration": 1617382465030,
   "links": [],
   "panels": [
     {
@@ -392,7 +392,7 @@
           "link": true,
           "linkTargetBlank": true,
           "linkTooltip": "Click to see ASN history",
-          "linkUrl": "http://grafana.tim.syd.infra.webex.com:3000/d/lfGwISKiz/prefix-history-by-asn?var-origin_as=$asn_num",
+          "linkUrl": "/d/prefix-hist-asn/prefix-history-by-asn?var-origin_as=$asn_num",
           "mappingType": 1,
           "pattern": "as_name",
           "thresholds": [],
@@ -472,7 +472,7 @@
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 7,
+        "col": 0,
         "desc": true
       },
       "styles": [
@@ -551,7 +551,7 @@
       "scroll": true,
       "showHeader": true,
       "sort": {
-        "col": 3,
+        "col": 0,
         "desc": true
       },
       "styles": [
@@ -620,105 +620,9 @@
       },
       "fontSize": "100%",
       "gridPos": {
-        "h": 13,
-        "w": 5,
+        "h": 15,
+        "w": 24,
         "x": 0,
-        "y": 24
-      },
-      "id": 15,
-      "links": [],
-      "pageSize": null,
-      "showHeader": true,
-      "sort": {
-        "col": 0,
-        "desc": true
-      },
-      "styles": [
-        {
-          "alias": "",
-          "align": "auto",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "dateFormat": "YYYY-MM-DD HH:mm:ss",
-          "decimals": 2,
-          "link": true,
-          "linkTargetBlank": true,
-          "linkTooltip": "Click for Prefix History",
-          "linkUrl": "/grafana/d/vCRvHSFiz/prefix-history-by-prefix?orgId=1&var-prefix=${__cell}",
-          "mappingType": 1,
-          "pattern": "Prefix",
-          "thresholds": [],
-          "type": "string",
-          "unit": "short"
-        },
-        {
-          "alias": "",
-          "align": "auto",
-          "colorMode": null,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "decimals": 2,
-          "pattern": "/.*/",
-          "thresholds": [],
-          "type": "string",
-          "unit": "short"
-        }
-      ],
-      "targets": [
-        {
-          "alias": "",
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT r.aggregate\n\tFROM (\n\t\tSELECT distinct w.prefix,\n\t\t\t\t   FIRST_VALUE(a.prefix) OVER (\n\t\t\t\t\t\tPARTITION BY w.prefix ORDER BY a.prefix ASC) as aggregate\n\t\t\t\tFROM (\n\t\t\t\t\tSELECT distinct prefix\n\t\t\t\t\t\tFROM ip_rib\n\t\t\t\t\t\tWHERE iswithdrawn = false\n\t\t\t\t\t\t\tAND origin_as = $asn_num\n\t\t\t\t\t\t\tAND prefix_len > 0 and prefix_len <= 25\n\t\t\t\t\t) w\n\t\t\t\t\tJOIN (\n\t\t\t\t\tSELECT distinct prefix\n\t\t\t\t\t\tFROM ip_rib\n\t\t\t\t\t\tWHERE iswithdrawn = false \n\t\t\t\t\t\t\tAND origin_as = $asn_num\n\t\t\t\t\t\t\tAND prefix_len > 0 and prefix_len <= 25\n\t\t\t\t\t) a ON (w.prefix <<= a.prefix)\n\t\t) r\n\tGROUP BY r.aggregate\n\tORDER BY aggregate;",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "title": "Aggregates",
-      "transform": "table",
-      "type": "table-old"
-    },
-    {
-      "columns": [],
-      "datasource": "PostgreSQL",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "fontSize": "100%",
-      "gridPos": {
-        "h": 13,
-        "w": 19,
-        "x": 5,
         "y": 24
       },
       "id": 4,
@@ -743,8 +647,8 @@
           "decimals": 2,
           "link": true,
           "linkTargetBlank": true,
-          "linkTooltip": "Click for Prefix History",
-          "linkUrl": "/grafana/d/vCRvHSFiz/prefix-history-by-prefix?orgId=1&var-prefix=${__cell}",
+          "linkTooltip": "Looking Glass",
+          "linkUrl": "/d/lookingglass-global/looking-glass-global?orgId=1&var-prefix=${__cell}",
           "mappingType": 1,
           "pattern": "Prefix",
           "thresholds": [],
@@ -809,9 +713,8 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "9009",
-          "value": "9009"
+          "text": "13445",
+          "value": "13445"
         },
         "description": null,
         "error": null,
@@ -828,7 +731,7 @@
           }
         ],
         "query": "109",
-        "queryValue": "9009",
+        "queryValue": "22003",
         "skipUrlSync": false,
         "type": "custom"
       }
@@ -864,7 +767,7 @@
     ]
   },
   "timezone": "",
-  "title": "ASN View (aggregates)",
-  "uid": "rXirE1TMz",
-  "version": 1
+  "title": "ASN View",
+  "uid": "asnview",
+  "version": 4
 }

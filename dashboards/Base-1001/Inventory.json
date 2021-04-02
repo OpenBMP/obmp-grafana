@@ -499,6 +499,6 @@
   },
   "timezone": "utc",
   "title": "Inventory",
-  "uid": "000000011",
-  "version": 3
+  "uid": "inventory",
+  "version": 4
 }

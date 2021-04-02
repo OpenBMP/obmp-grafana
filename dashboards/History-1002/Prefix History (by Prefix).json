@@ -15,10 +15,84 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 11,
-  "iteration": 1617209269185,
+  "id": 8,
+  "iteration": 1617383051596,
   "links": [],
   "panels": [
+    {
+      "columns": [],
+      "datasource": "PostgreSQL",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 5,
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "",
+          "align": "auto",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select lastmodified,CASE WHEN iswithdrawn THEN 'Withdrawn' ELSE 'Active' END as state,routername,peername,prefix,prefixlen,\n        origin_as,med,localpref,nh,as_path,communities \n    from v_ip_routes \n    where prefix = '[[prefix]]'\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Current RIB State",
+      "transform": "table",
+      "type": "table-old"
+    },
     {
       "aliasColors": {},
       "bars": false,
@@ -39,7 +113,7 @@
         "h": 7,
         "w": 11,
         "x": 0,
-        "y": 0
+        "y": 6
       },
       "hiddenSeries": false,
       "id": 1,
@@ -76,9 +150,10 @@
           "alias": "",
           "format": "time_series",
           "group": [],
+          "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) as updates, sum(withdraws) as withdraws\nFROM stats_chg_byasn s\nWHERE $__timeFilter(interval_time)\n   AND s.origin_as = [[origin_as]]\n\ngroup by interval_time\nORDER BY interval_time ASC\n",
+          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) as updates, sum(withdraws) as withdraws\nFROM stats_chg_byprefix s\nWHERE $__timeFilter(interval_time)\n   AND s.prefix = '[[prefix]]'\n\ngroup by interval_time\nORDER BY interval_time ASC\n",
           "refId": "A",
           "select": [
             [
@@ -161,7 +236,7 @@
         "h": 7,
         "w": 13,
         "x": 11,
-        "y": 0
+        "y": 6
       },
       "hiddenSeries": false,
       "id": 2,
@@ -198,7 +273,7 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) + sum(withdraws) as value,\n  left(PeerName,32) as metric\nFROM stats_chg_byasn l\n  JOIN v_peers p ON (l.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n   AND l.origin_as = [[origin_as]]\nGROUP BY l.interval_time,peername\nORDER BY interval_time ASC\n\n",
+          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) + sum(withdraws) as value,\n  left(PeerName,32) as metric\nFROM stats_chg_byprefix s\n  JOIN v_peers p ON (s.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n   AND s.prefix = '[[prefix]]'\nGROUP BY s.interval_time,peername\nORDER BY interval_time ASC\n\n",
           "refId": "A"
         }
       ],
@@ -254,7 +329,7 @@
       "datasource": "PostgreSQL",
       "datatablePagingType": "simple_numbers",
       "datatableTheme": "basic_theme",
-      "emptyData": false,
+      "emptyData": true,
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -266,7 +341,7 @@
         "h": 20,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 13
       },
       "hoverEnabled": true,
       "id": 3,
@@ -356,7 +431,7 @@
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": " select lastmodified,event,routername,peername,prefix,nh,\n        origin_as,as_path,communities \n    from v_ip_routes_history \n    where  $__timeFilter(lastmodified)\n      AND origin_as = [[origin_as]]\n      \n    order by lastmodified desc,id desc\n    limit 1000;",
+          "rawSql": " select lastmodified,event,routername,peername,prefix,nh,\n        origin_as,as_path,communities \n    from v_ip_routes_history \n    where  $__timeFilter(lastmodified)\n      AND prefix = '[[prefix]]'\n      \n    order by lastmodified desc,id desc\n    limit 1000;",
           "refId": "A",
           "select": [
             [
@@ -417,29 +492,30 @@
       {
         "current": {
           "selected": true,
-          "text": "0",
-          "value": "0"
+          "text": "66.114.160.0/20",
+          "value": "66.114.160.0/20"
         },
         "description": null,
         "error": null,
         "hide": 0,
-        "label": "Origin ASN",
-        "name": "origin_as",
+        "label": "Prefix",
+        "name": "prefix",
         "options": [
           {
             "selected": true,
-            "text": "0",
-            "value": "0"
+            "text": "66.114.160.0/20",
+            "value": "66.114.160.0/20"
           }
         ],
-        "query": "0",
+        "query": "66.114.160.0/20",
+        "queryValue": "67.211.53.0/24",
         "skipUrlSync": false,
         "type": "textbox"
       }
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {
@@ -468,7 +544,7 @@
     ]
   },
   "timezone": "",
-  "title": "Prefix History (by ASN)",
-  "uid": "lfGwISKiz",
-  "version": 1
+  "title": "Prefix History (by Prefix)",
+  "uid": "prefix-hist",
+  "version": 3
 }

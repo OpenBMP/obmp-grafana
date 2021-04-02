@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 9,
-  "iteration": 1617209305182,
+  "id": 7,
+  "iteration": 1617383076619,
   "links": [],
   "panels": [
     {
@@ -75,7 +75,7 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) as updates, sum(withdraws) as withdraws\nFROM stats_chg_bypeer s\nWHERE $__timeFilter(interval_time)\n   AND s.peer_hash_id IN (SELECT peer_hash_id\n                            from v_peers\n                            where peername = '$peer_name')\n\ngroup by interval_time\nORDER BY interval_time ASC\n",
+          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) as updates, sum(withdraws) as withdraws\nFROM stats_chg_bypeer s\nWHERE $__timeFilter(interval_time)\n   AND s.peer_hash_id IN (SELECT peer_hash_id\n                            from v_peers\n                            where routername = '$router')\n\ngroup by interval_time\nORDER BY interval_time ASC\n",
           "refId": "A"
         }
       ],
@@ -177,7 +177,7 @@
         {
           "alias": "",
           "format": "time_series",
-          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) + sum(withdraws) as value,\n  left(PeerName,32) as metric\nFROM stats_chg_bypeer l\n  JOIN v_peers p ON (l.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n   AND p.peername = '$peer_name'\nGROUP BY l.interval_time,peername\nORDER BY interval_time ASC\n\n",
+          "rawSql": "SELECT\n  interval_time as time,\n  sum(updates) + sum(withdraws) as value,\n  left(PeerName,32) as metric\nFROM stats_chg_bypeer l\n  JOIN v_peers p ON (l.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n   AND p.routername = '$router'\nGROUP BY l.interval_time,peername\nORDER BY interval_time ASC\n\n",
           "refId": "A"
         }
       ],
@@ -335,7 +335,7 @@
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": " select lastmodified,event,routername,peername,prefix,\n        origin_as,nh,as_path,communities \n    from v_ip_routes_history \n    where  $__timeFilter(lastmodified)\n      AND peername = '$peer_name'\n    order by lastmodified desc,id desc\n    limit 1000;",
+          "rawSql": " select lastmodified,event,peername,prefix,\n        origin_as,as_path,communities \n    from v_ip_routes_history \n    where  $__timeFilter(lastmodified)\n      AND routername = '[[router]]'\n    order by lastmodified desc,id desc\n    limit 5000;",
           "refId": "A",
           "select": [
             [
@@ -388,6 +388,7 @@
       "type": "briangann-datatable-panel"
     }
   ],
+  "refresh": false,
   "schemaVersion": 27,
   "style": "dark",
   "tags": [],
@@ -408,44 +409,16 @@
         "includeAll": false,
         "label": "Router",
         "multi": false,
-        "name": "router_name",
+        "name": "router",
         "options": [],
-        "query": "select distinct routername from v_peers",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "dfw10-wxbb-crt01.webex.com",
-          "value": "dfw10-wxbb-crt01.webex.com"
-        },
-        "datasource": "PostgreSQL",
-        "definition": "",
-        "description": null,
-        "error": null,
-        "hide": 0,
-        "includeAll": false,
-        "label": "Peer",
-        "multi": false,
-        "name": "peer_name",
-        "options": [],
-        "query": "select peername from v_peers where routername = '[[router_name]]'",
+        "query": "select name from routers",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
-        "tagsQuery": "select concat(routername, ' ', peername) from v_peers",
+        "tagsQuery": "",
         "type": "query",
         "useTags": false
       }
@@ -481,7 +454,7 @@
     ]
   },
   "timezone": "",
-  "title": "Prefix History (by Peer)",
-  "uid": "T1BOSIKmk",
-  "version": 1
+  "title": "Prefix History (by Router)",
+  "uid": "prefix-hist-router",
+  "version": 3
 }
