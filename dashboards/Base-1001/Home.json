@@ -17,7 +17,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 7,
+  "id": 6,
   "links": [],
   "panels": [
     {
@@ -53,7 +53,7 @@
         },
         "overrides": []
       },
-      "folderId": 1001,
+      "folderId": 1,
       "gridPos": {
         "h": 12,
         "w": 6,
@@ -91,7 +91,7 @@
         },
         "overrides": []
       },
-      "folderId": 1002,
+      "folderId": 8,
       "gridPos": {
         "h": 12,
         "w": 7,
@@ -197,6 +197,6 @@
   },
   "timezone": "",
   "title": "Home",
-  "uid": "SDsNb3Fiz",
-  "version": 8
+  "uid": "home",
+  "version": 2
 }
