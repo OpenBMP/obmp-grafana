@@ -19,7 +19,7 @@ providers:
     allowUiUpdates: true
     options:
       # <string, required> path to dashboard files on disk. Required when using the 'file' type
-      path: /var/lib/grafana/dashboards/Base
+      path: /var/lib/grafana/dashboards/Base-1001
       # <bool> use folder names from filesystem to create folders in Grafana
       foldersFromFilesStructure: false
   - name: 'OpenBMP-History'
@@ -39,7 +39,7 @@ providers:
     allowUiUpdates: true
     options:
       # <string, required> path to dashboard files on disk. Required when using the 'file' type
-      path: /var/lib/grafana/dashboards/History
+      path: /var/lib/grafana/dashboards/History-1002
       # <bool> use folder names from filesystem to create folders in Grafana
       foldersFromFilesStructure: false
   - name: 'OpenBMP-Tops'
@@ -59,6 +59,6 @@ providers:
     allowUiUpdates: true
     options:
       # <string, required> path to dashboard files on disk. Required when using the 'file' type
-      path: /var/lib/grafana/dashboards/Tops
+      path: /var/lib/grafana/dashboards/Tops-1003
       # <bool> use folder names from filesystem to create folders in Grafana
       foldersFromFilesStructure: false
