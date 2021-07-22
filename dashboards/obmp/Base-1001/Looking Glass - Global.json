@@ -242,7 +242,7 @@
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  floor(extract(epoch from max(p.timestamp))) as time,\n  CASE WHEN v.peer_hash_id is null THEN 'Not in Peers RIB' ELSE 'In Peer RIB' END as metric,\n  1 as value\nFROM bgp_peers p\n  left join (select peer_hash_id,isipv4\n             from v_ip_routes \n             where prefix >>= '[[prefix]]' \n                and iswithdrawn = false group by peer_hash_id,isipv4) v \n            on (p.hash_id = v.peer_hash_id)\nWHERE p.isipv4 = CASE WHEN family('[[prefix]]') = 4 THEN true ELSE false END\n  AND p.state = 'up'\nGROUP BY p.hash_id,v.peer_hash_id,p.isipv4\n\n",
+          "rawSql": "SELECT\n  floor(extract(epoch from max(p.timestamp))) as time,\n  CASE WHEN v.peer_hash_id is null THEN 'Not in Peers RIB' ELSE 'In Peer RIB' END as metric,\n  1 as value\nFROM bgp_peers p\n  left join (select peer_hash_id,isipv4\n             from v_ip_routes \n             where prefix >>= '[[prefix]]' \n                and iswithdrawn = false group by peer_hash_id,isipv4) v \n            on (p.hash_id = v.peer_hash_id)\nWHERE p.isipv4 = CASE WHEN family('[[prefix]]') = 4 THEN true ELSE false END\n  AND p.state = 'up'\nGROUP BY p.hash_id,v.peer_hash_id,p.isipv4\norder by time\n\n",
           "refId": "A",
           "select": [
             [
