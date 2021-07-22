@@ -587,7 +587,7 @@
           "alias": "",
           "format": "time_series",
           "hide": false,
-          "rawSql": "SELECT\n    max(interval_time) as time,\n    sum(updates) as value,\n    prefix as metric\n  FROM stats_chg_byprefix l\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id in (SELECT peer_hash_id from v_peers where routername in ($router_name))\n  GROUP BY prefix\n  order by value desc\nLIMIT 20",
+          "rawSql": "SELECT\n    max(interval_time) as time,\n    sum(updates) as value,\n    prefix as metric\n  FROM stats_chg_byprefix l\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id in (SELECT peer_hash_id from v_peers where routername in ($router_name))\n  GROUP BY prefix\n  order by time desc\nLIMIT 20",
           "refId": "A"
         }
       ],
@@ -691,7 +691,7 @@
           "alias": "",
           "format": "time_series",
           "hide": false,
-          "rawSql": "SELECT\n    max(interval_time) as time,\n    sum(withdraws) as value,\n    prefix as metric\n  FROM stats_chg_byprefix\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id in (SELECT peer_hash_id from v_peers where routername in ($router_name))\n  GROUP BY prefix\n  order by value desc\nLIMIT 20;\n",
+          "rawSql": "SELECT\n    max(interval_time) as time,\n    sum(withdraws) as value,\n    prefix as metric\n  FROM stats_chg_byprefix\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id in (SELECT peer_hash_id from v_peers where routername in ($router_name))\n  GROUP BY prefix\n  order by time desc\nLIMIT 20;\n",
           "refId": "A"
         }
       ],
