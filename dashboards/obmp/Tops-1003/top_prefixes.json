@@ -8,19 +8,25 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 83,
-  "iteration": 1643406816513,
+  "id": 16,
+  "iteration": 1643407127562,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -99,12 +105,16 @@
       "targets": [
         {
           "alias": "",
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
           "format": "time_series",
           "group": [],
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n   sum(updates) as updates,sum(withdraws) as withdraws\nFROM stats_chg_bypeer s\n  JOIN v_peers p ON (s.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n  AND s.peer_hash_id = '$peer_hash'\nGROUP BY time\nORDER BY time ASC\n\n",
+          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n   sum(updates) as updates,sum(withdraws) as withdraws\nFROM stats_chg_bypeer s\n  JOIN v_peers p ON (s.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n  AND s.peer_hash_id in ($peer_hash)\nGROUP BY time\nORDER BY time ASC\n\n",
           "refId": "A",
           "select": [
             [
@@ -126,13 +136,10 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Advertisements & Withdrawals",
       "type": "timeseries"
     },
     {
-      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -211,12 +218,16 @@
       "targets": [
         {
           "alias": "",
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
           "format": "time_series",
           "group": [],
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n    sum(updates),\n    p.PeerName as metric\n  FROM stats_chg_bypeer l\n  JOIN v_peers p ON (p.peer_hash_id = l.peer_hash_id)\n  WHERE $__timeFilter(interval_time)\n     AND l.peer_hash_id = '$peer_hash'\n  GROUP BY peername,time\n  order by time asc\n",
+          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n    sum(updates),\n    p.PeerName as metric\n  FROM stats_chg_bypeer l\n  JOIN v_peers p ON (p.peer_hash_id = l.peer_hash_id)\n  WHERE $__timeFilter(interval_time)\n     AND l.peer_hash_id in ($peer_hash)\n  GROUP BY peername,time\n  order by time asc\n",
           "refId": "A",
           "select": [
             [
@@ -238,13 +249,10 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Updates by Peer",
       "type": "timeseries"
     },
     {
-      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -322,12 +330,16 @@
       "targets": [
         {
           "alias": "",
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
           "format": "time_series",
           "group": [],
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n    sum(withdraws),\n    p.PeerName as metric\n  FROM stats_chg_bypeer l\n  JOIN v_peers p ON (p.peer_hash_id = l.peer_hash_id)\n  WHERE $__timeFilter(interval_time)\n     AND l.peer_hash_id = '$peer_hash'\n  group by peername,time\n  order by time",
+          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n    sum(withdraws),\n    p.PeerName as metric\n  FROM stats_chg_bypeer l\n  JOIN v_peers p ON (p.peer_hash_id = l.peer_hash_id)\n  WHERE $__timeFilter(interval_time)\n     AND l.peer_hash_id in ($peer_hash)\n  group by peername,time\n  order by time",
           "refId": "A",
           "select": [
             [
@@ -349,13 +361,10 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Withdraws  by Peer",
       "type": "timeseries"
     },
     {
-      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -448,19 +457,30 @@
       "id": 10,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
           "format": "table",
           "group": [],
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT as_name as \"AS Name\",d.* from (\n  SELECT\n      origin_as as asn,\n      sum(updates) as \"Updates\"\n    FROM stats_chg_byasn l\n    WHERE $__timeFilter(interval_time)\n        AND peer_hash_id = '$peer_hash'\n    GROUP BY asn\n    order by \"Updates\" desc\n  LIMIT 20\n) d\nLEFT JOIN info_asn i ON (i.asn = d.asn)\n",
+          "rawSql": "SELECT as_name as \"AS Name\",d.* from (\n  SELECT\n      origin_as as asn,\n      sum(updates) as \"Updates\"\n    FROM stats_chg_byasn l\n    WHERE $__timeFilter(interval_time)\n        AND peer_hash_id in ($peer_hash)\n    GROUP BY asn\n    order by \"Updates\" desc\n  LIMIT 20\n) d\nLEFT JOIN info_asn i ON (i.asn = d.asn)\n",
           "refId": "A",
           "select": [
             [
@@ -482,13 +502,10 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Top  Updates by ASN",
       "type": "table"
     },
     {
-      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -581,19 +598,30 @@
       "id": 11,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
           "format": "table",
           "group": [],
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT as_name,d.* from (\n  SELECT\n      origin_as as asn,\n      sum(withdraws) as \"Withdraws\"\n    FROM stats_chg_byasn l\n    WHERE $__timeFilter(interval_time)\n        AND peer_hash_id = '$peer_hash'\n    GROUP BY asn\n    order by \"Withdraws\" desc\n  LIMIT 20\n) d\nLEFT JOIN info_asn i ON (i.asn = d.asn)\n",
+          "rawSql": "SELECT as_name,d.* from (\n  SELECT\n      origin_as as asn,\n      sum(withdraws) as \"Withdraws\"\n    FROM stats_chg_byasn l\n    WHERE $__timeFilter(interval_time)\n        AND peer_hash_id in ($peer_hash)\n    GROUP BY asn\n    order by \"Withdraws\" desc\n  LIMIT 20\n) d\nLEFT JOIN info_asn i ON (i.asn = d.asn)\n",
           "refId": "A",
           "select": [
             [
@@ -615,13 +643,10 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Top  Withdraws by ASN",
       "type": "table"
     },
     {
-      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -746,19 +771,30 @@
       "id": 2,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
           "format": "table",
           "group": [],
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT as_name as \"AS Name\", descr as \"Desc\",r.origin_as,d.* FROM (\nSELECT\n    prefix,\n    sum(updates) as \"Updates\"\n  FROM stats_chg_byprefix l\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id = '$peer_hash'\n  GROUP BY prefix\n  order by \"Updates\" desc\nLIMIT 60\n) d\nJOIN ip_rib r ON (r.peer_hash_id = '$peer_hash' AND r.prefix = d.prefix)\nLEFT JOIN info_route ir ON (ir.prefix = d.prefix)\nLEFT JOIN info_asn i ON (i.asn = r.origin_as)",
+          "rawSql": "SELECT as_name as \"AS Name\", irr_descr as \"Desc\",r.recv_origin_as as origin_as,d.* FROM (\nSELECT\n    prefix,\n    sum(updates) as \"Updates\"\n  FROM stats_chg_byprefix l\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id in ($peer_hash)\n  GROUP BY prefix\n  order by \"Updates\" desc\nLIMIT 60\n) d\nJOIN global_ip_rib r ON (r.prefix = d.prefix)\n--LEFT JOIN info_route ir ON (ir.prefix = d.prefix)\nLEFT JOIN info_asn i ON (i.asn = r.recv_origin_as)",
           "refId": "A",
           "select": [
             [
@@ -780,13 +816,10 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Top  by Prefix",
+      "title": "Top Prefix Updates",
       "type": "table"
     },
     {
-      "datasource": "PostgreSQL",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -911,19 +944,30 @@
       "id": 12,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
           "format": "table",
           "group": [],
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT as_name as \"AS Name\", descr as \"Desc\",r.origin_as,d.* FROM (\nSELECT\n    prefix,\n    sum(withdraws) as \"Withdraws\"\n  FROM stats_chg_byprefix l\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id = '$peer_hash'\n  GROUP BY prefix\n  order by \"Withdraws\" desc\nLIMIT 60\n) d\nJOIN ip_rib r ON (r.peer_hash_id = '$peer_hash' AND r.prefix = d.prefix)\nLEFT JOIN info_route ir ON (ir.prefix = d.prefix)\nLEFT JOIN info_asn i ON (i.asn = r.origin_as)",
+          "rawSql": "SELECT as_name as \"AS Name\", irr_descr as \"Desc\",r.recv_origin_as as origin_as,d.* FROM (\nSELECT\n    prefix,\n    sum(withdraws) as \"Withdraws\"\n  FROM stats_chg_byprefix l\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id in ($peer_hash)\n  GROUP BY prefix\n  order by \"Withdraws\" desc\nLIMIT 60\n) d\nJOIN global_ip_rib r ON (r.prefix = d.prefix)\n--LEFT JOIN info_route ir ON (ir.prefix = d.prefix)\nLEFT JOIN info_asn i ON (i.asn = r.recv_origin_as)",
           "refId": "A",
           "select": [
             [
@@ -945,14 +989,12 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Top  by Prefix",
+      "title": "Top Prefix Withdraws",
       "type": "table"
     }
   ],
   "refresh": false,
-  "schemaVersion": 30,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -960,18 +1002,23 @@
       {
         "allValue": "",
         "current": {
-          "selected": false,
-          "text": "ams-xrv9k-bmp",
-          "value": "093a19a9-3291-5ae6-d35c-9d8c1a27c29d"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
-        "datasource": "PostgreSQL",
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
         "definition": "select name as __text, hash_id as __value from routers where length(name) > 0",
-        "description": null,
-        "error": null,
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "Filter by Router",
-        "multi": false,
+        "multi": true,
         "name": "router_hash",
         "options": [],
         "query": "select name as __text, hash_id as __value from routers where length(name) > 0",
@@ -985,23 +1032,19 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "fra01-wxbb-crt01.webex.com",
-          "value": "29aa1cf6-099a-29af-9c84-ce5fbc2b2996"
+          "text": "All",
+          "value": "$__all"
         },
-        "datasource": null,
-        "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id = '$router_hash'",
-        "description": null,
-        "error": null,
+        "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash)",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "Peer",
-        "multi": false,
+        "multi": true,
         "name": "peer_hash",
         "options": [],
-        "query": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id = '$router_hash'",
+        "query": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1042,5 +1085,6 @@
   "timezone": "utc",
   "title": "Top by Prefixes",
   "uid": "e_cJJzxnk",
-  "version": 9
+  "version": 5,
+  "weekStart": ""
 }
