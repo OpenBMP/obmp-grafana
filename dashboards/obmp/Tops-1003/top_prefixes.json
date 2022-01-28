@@ -1,0 +1,1046 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 83,
+  "iteration": 1643406816513,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "PostgreSQL",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 0,
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "alias": "",
+          "format": "time_series",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n   sum(updates) as updates,sum(withdraws) as withdraws\nFROM stats_chg_bypeer s\n  JOIN v_peers p ON (s.peer_hash_id = p.peer_hash_id)\nWHERE $__timeFilter(interval_time)\n  AND s.peer_hash_id = '$peer_hash'\nGROUP BY time\nORDER BY time ASC\n\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Advertisements & Withdrawals",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Count of Updates",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "id": 4,
+      "interval": "15m",
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "alias": "",
+          "format": "time_series",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n    sum(updates),\n    p.PeerName as metric\n  FROM stats_chg_bypeer l\n  JOIN v_peers p ON (p.peer_hash_id = l.peer_hash_id)\n  WHERE $__timeFilter(interval_time)\n     AND l.peer_hash_id = '$peer_hash'\n  GROUP BY peername,time\n  order by time asc\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Updates by Peer",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Count of Updates",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 5,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "alias": "",
+          "format": "time_series",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n    sum(withdraws),\n    p.PeerName as metric\n  FROM stats_chg_bypeer l\n  JOIN v_peers p ON (p.peer_hash_id = l.peer_hash_id)\n  WHERE $__timeFilter(interval_time)\n     AND l.peer_hash_id = '$peer_hash'\n  group by peername,time\n  order by time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Withdraws  by Peer",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 60
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Updates"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "asn"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Prefix History",
+                    "url": "/grafana/d/score-by-origin/clients-score-by-origin-asn?orgId=1&var-input=${__value.text}&${__url_time_range}"
+                  }
+                ]
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "asn"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 119
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 10,
+      "links": [],
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT as_name as \"AS Name\",d.* from (\n  SELECT\n      origin_as as asn,\n      sum(updates) as \"Updates\"\n    FROM stats_chg_byasn l\n    WHERE $__timeFilter(interval_time)\n        AND peer_hash_id = '$peer_hash'\n    GROUP BY asn\n    order by \"Updates\" desc\n  LIMIT 20\n) d\nLEFT JOIN info_asn i ON (i.asn = d.asn)\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Top  Updates by ASN",
+      "type": "table"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 60
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Withdraws"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "asn"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Prefix History",
+                    "url": "/grafana/d/score-by-origin/clients-score-by-origin-asn?orgId=1&var-input=${__value.text}&${__url_time_range}"
+                  }
+                ]
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "asn"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 119
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "id": 11,
+      "links": [],
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT as_name,d.* from (\n  SELECT\n      origin_as as asn,\n      sum(withdraws) as \"Withdraws\"\n    FROM stats_chg_byasn l\n    WHERE $__timeFilter(interval_time)\n        AND peer_hash_id = '$peer_hash'\n    GROUP BY asn\n    order by \"Withdraws\" desc\n  LIMIT 20\n) d\nLEFT JOIN info_asn i ON (i.asn = d.asn)\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Top  Withdraws by ASN",
+      "type": "table"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 60
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Updates"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "prefix"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.width",
+                "value": 258
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Prefix History",
+                    "url": "/grafana/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-prefix=${__value.text}&${__url_time_range}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "origin_as"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.width",
+                "value": 136
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AS Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 136
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Desc"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 178
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 20
+      },
+      "id": 2,
+      "links": [],
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT as_name as \"AS Name\", descr as \"Desc\",r.origin_as,d.* FROM (\nSELECT\n    prefix,\n    sum(updates) as \"Updates\"\n  FROM stats_chg_byprefix l\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id = '$peer_hash'\n  GROUP BY prefix\n  order by \"Updates\" desc\nLIMIT 60\n) d\nJOIN ip_rib r ON (r.peer_hash_id = '$peer_hash' AND r.prefix = d.prefix)\nLEFT JOIN info_route ir ON (ir.prefix = d.prefix)\nLEFT JOIN info_asn i ON (i.asn = r.origin_as)",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Top  by Prefix",
+      "type": "table"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 60
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Withdraws"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "prefix"
+            },
+            "properties": [
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.width",
+                "value": 258
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "Prefix History",
+                    "url": "/grafana/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-prefix=${__value.text}&${__url_time_range}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "origin_as"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "custom.align",
+                "value": "center"
+              },
+              {
+                "id": "custom.width",
+                "value": 136
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AS Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 136
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Desc"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 178
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 20
+      },
+      "id": 12,
+      "links": [],
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "alias": "",
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT as_name as \"AS Name\", descr as \"Desc\",r.origin_as,d.* FROM (\nSELECT\n    prefix,\n    sum(withdraws) as \"Withdraws\"\n  FROM stats_chg_byprefix l\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id = '$peer_hash'\n  GROUP BY prefix\n  order by \"Withdraws\" desc\nLIMIT 60\n) d\nJOIN ip_rib r ON (r.peer_hash_id = '$peer_hash' AND r.prefix = d.prefix)\nLEFT JOIN info_route ir ON (ir.prefix = d.prefix)\nLEFT JOIN info_asn i ON (i.asn = r.origin_as)",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Top  by Prefix",
+      "type": "table"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": "",
+        "current": {
+          "selected": false,
+          "text": "ams-xrv9k-bmp",
+          "value": "093a19a9-3291-5ae6-d35c-9d8c1a27c29d"
+        },
+        "datasource": "PostgreSQL",
+        "definition": "select name as __text, hash_id as __value from routers where length(name) > 0",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Filter by Router",
+        "multi": false,
+        "name": "router_hash",
+        "options": [],
+        "query": "select name as __text, hash_id as __value from routers where length(name) > 0",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "fra01-wxbb-crt01.webex.com",
+          "value": "29aa1cf6-099a-29af-9c84-ce5fbc2b2996"
+        },
+        "datasource": null,
+        "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id = '$router_hash'",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Peer",
+        "multi": false,
+        "name": "peer_hash",
+        "options": [],
+        "query": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id = '$router_hash'",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "utc",
+  "title": "Top by Prefixes",
+  "uid": "e_cJJzxnk",
+  "version": 9
+}
