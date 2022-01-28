@@ -7,9 +7,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "limit": 100,
         "name": "Annotations & Alerts",
-        "showIn": 0,
         "type": "dashboard"
       }
     ]
@@ -17,18 +15,11 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 74,
   "links": [],
   "panels": [
     {
-      "datasource": "",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
+      "datasource": "PostgreSQL",
       "gridPos": {
         "h": 3,
         "w": 24,
@@ -41,104 +32,18 @@
         "content": "# OpenBMP\n\n*Select a dashboard*",
         "mode": "markdown"
       },
-      "pluginVersion": "7.1.0",
-      "title": "",
+      "pluginVersion": "8.0.5",
       "type": "text"
     },
     {
-      "datasource": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "folderId": 2,
+      "datasource": "PostgreSQL",
       "gridPos": {
-        "h": 12,
-        "w": 6,
+        "h": 18,
+        "w": 4,
         "x": 0,
         "y": 3
       },
-      "headings": false,
-      "id": 2,
-      "limit": 10,
-      "links": [],
-      "options": {
-        "folderId": 8,
-        "maxItems": 41,
-        "query": "",
-        "showHeadings": true,
-        "showRecentlyViewed": false,
-        "showSearch": true,
-        "showStarred": false,
-        "tags": []
-      },
-      "pluginVersion": "7.5.1",
-      "query": "",
-      "recent": false,
-      "search": true,
-      "starred": false,
-      "tags": [],
-      "title": "Base",
-      "type": "dashlist"
-    },
-    {
-      "datasource": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "folderId": 8,
-      "gridPos": {
-        "h": 12,
-        "w": 7,
-        "x": 6,
-        "y": 3
-      },
-      "headings": false,
-      "id": 4,
-      "limit": 10,
-      "links": [],
-      "options": {
-        "folderId": 1,
-        "maxItems": 41,
-        "query": "",
-        "showHeadings": true,
-        "showRecentlyViewed": false,
-        "showSearch": true,
-        "showStarred": false,
-        "tags": []
-      },
-      "pluginVersion": "7.5.1",
-      "query": "",
-      "recent": false,
-      "search": true,
-      "starred": false,
-      "tags": [],
-      "title": "Prefix History",
-      "type": "dashlist"
-    },
-    {
-      "datasource": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "folderId": 14,
-      "gridPos": {
-        "h": 12,
-        "w": 5,
-        "x": 13,
-        "y": 3
-      },
-      "headings": false,
       "id": 7,
-      "limit": 10,
       "links": [],
       "options": {
         "folderId": 1003,
@@ -150,17 +55,88 @@
         "showStarred": false,
         "tags": []
       },
-      "pluginVersion": "7.5.1",
-      "query": "",
-      "recent": false,
-      "search": true,
-      "starred": false,
+      "pluginVersion": "8.0.5",
       "tags": [],
       "title": "Tops",
       "type": "dashlist"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "gridPos": {
+        "h": 18,
+        "w": 5,
+        "x": 4,
+        "y": 3
+      },
+      "id": 2,
+      "links": [],
+      "options": {
+        "folderId": 1001,
+        "maxItems": 41,
+        "query": "",
+        "showHeadings": true,
+        "showRecentlyViewed": false,
+        "showSearch": true,
+        "showStarred": false,
+        "tags": []
+      },
+      "pluginVersion": "8.0.5",
+      "tags": [],
+      "title": "General",
+      "type": "dashlist"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "gridPos": {
+        "h": 18,
+        "w": 5,
+        "x": 9,
+        "y": 3
+      },
+      "id": 3,
+      "links": [],
+      "options": {
+        "folderId": 1004,
+        "maxItems": 41,
+        "query": "",
+        "showHeadings": true,
+        "showRecentlyViewed": false,
+        "showSearch": true,
+        "showStarred": false,
+        "tags": []
+      },
+      "pluginVersion": "8.0.5",
+      "tags": [],
+      "title": "Link State",
+      "type": "dashlist"
+    },
+    {
+      "datasource": "PostgreSQL",
+      "gridPos": {
+        "h": 18,
+        "w": 6,
+        "x": 14,
+        "y": 3
+      },
+      "id": 4,
+      "links": [],
+      "options": {
+        "folderId": 1002,
+        "maxItems": 41,
+        "query": "",
+        "showHeadings": true,
+        "showRecentlyViewed": false,
+        "showSearch": true,
+        "showStarred": false,
+        "tags": []
+      },
+      "pluginVersion": "8.0.5",
+      "tags": [],
+      "title": "Prefix History",
+      "type": "dashlist"
     }
   ],
-  "schemaVersion": 26,
+  "schemaVersion": 30,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -196,7 +172,7 @@
     ]
   },
   "timezone": "",
-  "title": "OBMP Home",
-  "uid": "obmp-home",
+  "title": "OBMP-Home",
+  "uid": "Kl8Rupn7k",
   "version": 2
 }

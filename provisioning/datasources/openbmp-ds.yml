@@ -11,6 +11,7 @@ apiVersion: 1
 datasources:
   # <string, required> name of the datasource. Required
   - name: PostgreSQL
+    uid: obmp_postgres
     # <string, required> datasource type. Required
     type: postgres
     # <string, required> access mode. direct or proxy. Required
@@ -19,20 +20,21 @@ datasources:
     orgId: 1
     # <string> url
     url: obmp-psql:5432
-    # <string> database password, if used
-    password: openbmp
     # <string> database user, if used
     user: openbmp
     # <string> database name, if used
     database: openbmp
     # <bool> mark as default datasource. Max one per org
     isDefault: true
+
+    secureJsonData:
+      password: openbmp
+
     # <map> fields that will be converted to json and stored in json_data
     jsonData:
-      graphiteVersion: "1.1"
       tlsAuth: false
       tlsAuthWithCACert: false
-      postgresVersion: "v12"
+      postgresVersion: "v12+"
       sslmode: "require"
       timescaledb: true
       maxOpenConns: 6

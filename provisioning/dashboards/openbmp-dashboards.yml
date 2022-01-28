@@ -14,7 +14,7 @@ providers:
     # <bool> disable dashboard deletion
     disableDeletion: false
     # <int> how often Grafana will scan for changed dashboards
-    updateIntervalSeconds: 10
+    updateIntervalSeconds: 30
     # <bool> allow updating provisioned dashboards from the UI
     allowUiUpdates: true
     options:
@@ -35,7 +35,7 @@ providers:
     # <bool> disable dashboard deletion
     disableDeletion: false
     # <int> how often Grafana will scan for changed dashboards
-    updateIntervalSeconds: 10
+    updateIntervalSeconds: 30
     # <bool> allow updating provisioned dashboards from the UI
     allowUiUpdates: true
     options:
@@ -55,7 +55,7 @@ providers:
     # <bool> disable dashboard deletion
     disableDeletion: false
     # <int> how often Grafana will scan for changed dashboards
-    updateIntervalSeconds: 10
+    updateIntervalSeconds: 30
     # <bool> allow updating provisioned dashboards from the UI
     allowUiUpdates: true
     options:
@@ -75,7 +75,7 @@ providers:
     # <bool> disable dashboard deletion
     disableDeletion: false
     # <int> how often Grafana will scan for changed dashboards
-    updateIntervalSeconds: 10
+    updateIntervalSeconds: 30
     # <bool> allow updating provisioned dashboards from the UI
     allowUiUpdates: true
     options:
@@ -83,4 +83,23 @@ providers:
       path: /var/lib/grafana/dashboards/obmp/Tops-1003
       # <bool> use folder names from filesystem to create folders in Grafana
       foldersFromFilesStructure: false
-
+  - name: 'OpenBMP-LinkState'
+    # <int> Org id. Default to 1
+    orgId: 1
+    # <string> name of the dashboard folder.
+    folder: 'OBMP-LinkState'
+    # <string> folder UID. will be automatically generated if not specified
+    folderUid: '1004'
+    # <string> provider type. Default to 'file'
+    type: file
+    # <bool> disable dashboard deletion
+    disableDeletion: false
+    # <int> how often Grafana will scan for changed dashboards
+    updateIntervalSeconds: 30
+    # <bool> allow updating provisioned dashboards from the UI
+    allowUiUpdates: true
+    options:
+      # <string, required> path to dashboard files on disk. Required when using the 'file' type
+      path: /var/lib/grafana/dashboards/obmp/LinkState-1004
+      # <bool> use folder names from filesystem to create folders in Grafana
+      foldersFromFilesStructure: false
