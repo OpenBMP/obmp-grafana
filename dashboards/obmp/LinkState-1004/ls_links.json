@@ -8,20 +8,114 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 18,
-  "iteration": 1629242565115,
+  "id": 14,
+  "iteration": 1643409234368,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "cacheTimeout": null,
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "values": [
+            "value",
+            "percent"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select floor(extract(epoch from max(timestamp))) as time,\n       count(*) as value, CASE WHEN iswithdrawn THEN 'WITHDRAWN' ELSE 'ACTIVE' END as metric\nfrom ls_links\nwhere local_node_hash_id = '$local_node_hash_id'\n  AND peer_hash_id = '$peer_hash'\ngroup by iswithdrawn\norder by time\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Link States",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -42,19 +136,18 @@
       },
       "gridPos": {
         "h": 7,
-        "w": 7,
-        "x": 0,
+        "w": 6,
+        "x": 7,
         "y": 0
       },
-      "id": 4,
-      "interval": null,
+      "id": 6,
       "links": [],
       "maxDataPoints": 3,
       "options": {
         "legend": {
           "calcs": [],
           "displayMode": "table",
-          "placement": "bottom",
+          "placement": "right",
           "values": [
             "value"
           ]
@@ -77,7 +170,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select floor(extract(epoch from max(timestamp))) as time,\n       count(*) as value, CASE WHEN mt_id = 2 THEN 'IPv6' ELSE 'IPv4' END as metric\nfrom v_ls_prefixes\nwhere local_node_hash_id = '$local_node_hash_id'\n  and peer_hash_id = '$peer_hash'\ngroup by mt_id\n",
+          "rawSql": "select floor(extract(epoch from max(timestamp))) as time,\n       count(*) as value, CASE WHEN mt_id = 2 THEN 'IPv6' ELSE 'IPv4' END as metric\nfrom ls_links\nwhere local_node_hash_id = '$local_node_hash_id'\n  AND peer_hash_id = '$peer_hash'\ngroup by mt_id\norder by time\n",
           "refId": "A",
           "select": [
             [
@@ -99,22 +192,22 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Prefixes Total by Type",
+      "title": "Links by Type",
       "type": "piechart"
     },
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "displayMode": "auto",
-            "filterable": true
+            "align": "auto",
+            "displayMode": "auto"
           },
           "decimals": 0,
           "displayName": "",
@@ -147,11 +240,30 @@
               },
               {
                 "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              },
+              {
+                "id": "unit",
                 "value": "time: YYYY-MM-DD HH:mm:ss.SSS"
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "seq"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "locale"
               }
             ]
           },
@@ -188,23 +300,30 @@
         ]
       },
       "gridPos": {
-        "h": 22,
-        "w": 23,
+        "h": 14,
+        "w": 24,
         "x": 0,
         "y": 7
       },
       "id": 2,
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT state, mt_id, prefix, metric, protocol, timestamp\n  FROM v_ls_prefixes\n  WHERE local_node_hash_id = '$local_node_hash_id'\n    AND peer_hash_id = 'd46b7950-5eb0-a864-be53-16e4247c68f0'",
+          "rawSql": "SELECT state,local_router_name,local_igp_routerid,remote_router_name,remote_igp_routerid,mt_id,igp_metric,protocol, timestamp, seq\n  FROM v_ls_links\n  WHERE local_node_hash_id = '$local_node_hash_id'\n    AND peer_hash_id = '$peer_hash'",
           "refId": "A",
           "select": [
             [
@@ -226,9 +345,7 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$local_node_name Prefixes",
+      "title": "$local_node_name Links",
       "transformations": [
         {
           "id": "merge",
@@ -237,32 +354,31 @@
           }
         }
       ],
+      "transparent": true,
       "type": "table"
     }
   ],
-  "schemaVersion": 30,
+  "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "obmp-linkstate"
+  ],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "jfk10-wxbb-crt01.webex.com",
-          "value": "d46b7950-5eb0-a864-be53-16e4247c68f0"
+          "text": "yyz01-wxbb-crt01-lo0.webex.com",
+          "value": "367c22e4-57d9-2328-654b-96ea750e0267"
         },
-        "datasource": null,
-        "definition": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10",
-        "description": null,
-        "error": null,
+        "definition": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10\n   ",
         "hide": 0,
         "includeAll": false,
         "label": "BGP Peer",
         "multi": false,
         "name": "peer_hash",
         "options": [],
-        "query": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10",
+        "query": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10\n   ",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -273,23 +389,23 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "AMS01-OOB-CON01",
-          "value": "17107f98-e832-66a4-11a9-bd541b7454fd"
+          "text": "AMS10-WXBB-CRT02",
+          "value": "1ed1da6b-6f57-57aa-92f5-edda59049e9a"
         },
-        "datasource": "PostgreSQL",
-        "definition": "select name as __text, hash_id as __value from ls_nodes where peer_hash_id = '$peer_hash' AND not igp_router_id ~ '\\..[1-9A-F]00$'",
-        "description": null,
-        "error": null,
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
+        "definition": "select name as __text, hash_id as __value from ls_nodes where peer_hash_id = '$peer_hash' and not igp_router_id ~ '\\..[1-9A-F]00$'",
         "hide": 0,
         "includeAll": false,
         "label": "ISIS Node",
         "multi": false,
         "name": "local_node_hash_id",
         "options": [],
-        "query": "select name as __text, hash_id as __value from ls_nodes where peer_hash_id = '$peer_hash' AND not igp_router_id ~ '\\..[1-9A-F]00$'",
+        "query": "select name as __text, hash_id as __value from ls_nodes where peer_hash_id = '$peer_hash' and not igp_router_id ~ '\\..[1-9A-F]00$'",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -300,19 +416,18 @@
         "useTags": false
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "AMS01-OOB-CON01",
-          "value": "AMS01-OOB-CON01"
+          "text": "AMS10-WXBB-CRT02",
+          "value": "AMS10-WXBB-CRT02"
         },
-        "datasource": "PostgreSQL",
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
         "definition": "select name from ls_nodes where hash_id = '$local_node_hash_id' and peer_hash_id = '$peer_hash'",
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "local_node_name",
         "options": [],
@@ -347,7 +462,8 @@
     ]
   },
   "timezone": "",
-  "title": "LS Prefixes",
-  "uid": "iEcqtlyWk",
-  "version": 6
+  "title": "LS Links",
+  "uid": "MPqNG_sWz",
+  "version": 2,
+  "weekStart": ""
 }

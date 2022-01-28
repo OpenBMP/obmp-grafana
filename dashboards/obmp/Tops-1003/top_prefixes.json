@@ -21,8 +21,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 16,
-  "iteration": 1643407127562,
+  "id": 11,
+  "iteration": 1643408840193,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -996,7 +996,9 @@
   "refresh": false,
   "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "obmp-tops"
+  ],
   "templating": {
     "list": [
       {
@@ -1085,6 +1087,6 @@
   "timezone": "utc",
   "title": "Top by Prefixes",
   "uid": "e_cJJzxnk",
-  "version": 5,
+  "version": 2,
   "weekStart": ""
 }

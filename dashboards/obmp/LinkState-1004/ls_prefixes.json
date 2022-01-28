@@ -1,0 +1,364 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 16,
+  "iteration": 1643409409873,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select floor(extract(epoch from max(timestamp))) as time,\n       count(*) as value, CASE WHEN mt_id = 2 THEN 'IPv6' ELSE 'IPv4' END as metric\nfrom v_ls_prefixes\nwhere local_node_hash_id = '$local_node_hash_id'\n  and peer_hash_id = '$peer_hash'\ngroup by mt_id\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Prefixes Total by Type",
+      "type": "piechart"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": true
+          },
+          "decimals": 0,
+          "displayName": "",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "timestamp"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Time"
+              },
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm:ss.SSS"
+              },
+              {
+                "id": "custom.align"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "state"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background-solid"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "ACTIVE": {
+                        "color": "semi-dark-green",
+                        "index": 0
+                      },
+                      "WITHDRAWN": {
+                        "color": "semi-dark-red",
+                        "index": 1
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 22,
+        "w": 23,
+        "x": 0,
+        "y": 7
+      },
+      "id": 2,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT state, mt_id, prefix, metric, protocol, timestamp\n  FROM v_ls_prefixes\n  WHERE local_node_hash_id = '$local_node_hash_id'\n    AND peer_hash_id = '$peer_hash'",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "$local_node_name Prefixes",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {
+            "reducers": []
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [
+    "obmp-linkstate"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "yyz01-wxbb-crt01-lo0.webex.com",
+          "value": "367c22e4-57d9-2328-654b-96ea750e0267"
+        },
+        "definition": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10",
+        "hide": 0,
+        "includeAll": false,
+        "label": "BGP Peer",
+        "multi": false,
+        "name": "peer_hash",
+        "options": [],
+        "query": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "BLR03-WXBB-CRT01",
+          "value": "4275c83a-8d03-5361-d890-0b2bf4ad1b91"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
+        "definition": "select name as __text, hash_id as __value from ls_nodes where peer_hash_id = '$peer_hash' AND not igp_router_id ~ '\\..[1-9A-F]00$'",
+        "hide": 0,
+        "includeAll": false,
+        "label": "ISIS Node",
+        "multi": false,
+        "name": "local_node_hash_id",
+        "options": [],
+        "query": "select name as __text, hash_id as __value from ls_nodes where peer_hash_id = '$peer_hash' AND not igp_router_id ~ '\\..[1-9A-F]00$'",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 5,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "BLR03-WXBB-CRT01",
+          "value": "BLR03-WXBB-CRT01"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
+        "definition": "select name from ls_nodes where hash_id = '$local_node_hash_id' and peer_hash_id = '$peer_hash'",
+        "hide": 2,
+        "includeAll": false,
+        "multi": false,
+        "name": "local_node_name",
+        "options": [],
+        "query": "select name from ls_nodes where hash_id = '$local_node_hash_id' and peer_hash_id = '$peer_hash'",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "LS Prefixes",
+  "uid": "iEcqtlyWk",
+  "version": 3,
+  "weekStart": ""
+}

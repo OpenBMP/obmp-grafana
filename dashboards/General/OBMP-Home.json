@@ -8,18 +8,28 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 74,
+  "id": 1,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "gridPos": {
         "h": 3,
         "w": 24,
@@ -32,11 +42,14 @@
         "content": "# OpenBMP\n\n*Select a dashboard*",
         "mode": "markdown"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "type": "text"
     },
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "gridPos": {
         "h": 18,
         "w": 4,
@@ -46,97 +59,111 @@
       "id": 7,
       "links": [],
       "options": {
-        "folderId": 1003,
+        "folderUid": "1003",
         "maxItems": 41,
         "query": "",
         "showHeadings": true,
         "showRecentlyViewed": false,
         "showSearch": true,
         "showStarred": false,
-        "tags": []
+        "tags": [
+          "obmp-tops"
+        ]
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "tags": [],
       "title": "Tops",
       "type": "dashlist"
     },
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "gridPos": {
         "h": 18,
         "w": 5,
         "x": 4,
         "y": 3
       },
-      "id": 2,
+      "id": 8,
       "links": [],
       "options": {
-        "folderId": 1001,
         "maxItems": 41,
         "query": "",
         "showHeadings": true,
         "showRecentlyViewed": false,
         "showSearch": true,
         "showStarred": false,
-        "tags": []
+        "tags": [
+          "obmp-base"
+        ]
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "tags": [],
-      "title": "General",
+      "title": "Base",
       "type": "dashlist"
     },
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "gridPos": {
         "h": 18,
         "w": 5,
         "x": 9,
         "y": 3
       },
-      "id": 3,
-      "links": [],
-      "options": {
-        "folderId": 1004,
-        "maxItems": 41,
-        "query": "",
-        "showHeadings": true,
-        "showRecentlyViewed": false,
-        "showSearch": true,
-        "showStarred": false,
-        "tags": []
-      },
-      "pluginVersion": "8.0.5",
-      "tags": [],
-      "title": "Link State",
-      "type": "dashlist"
-    },
-    {
-      "datasource": "PostgreSQL",
-      "gridPos": {
-        "h": 18,
-        "w": 6,
-        "x": 14,
-        "y": 3
-      },
       "id": 4,
       "links": [],
       "options": {
-        "folderId": 1002,
         "maxItems": 41,
         "query": "",
         "showHeadings": true,
         "showRecentlyViewed": false,
         "showSearch": true,
         "showStarred": false,
-        "tags": []
+        "tags": [
+          "obmp-history"
+        ]
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "tags": [],
       "title": "Prefix History",
       "type": "dashlist"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 5,
+        "x": 14,
+        "y": 3
+      },
+      "id": 3,
+      "links": [],
+      "options": {
+        "maxItems": 41,
+        "query": "",
+        "showHeadings": true,
+        "showRecentlyViewed": false,
+        "showSearch": true,
+        "showStarred": false,
+        "tags": [
+          "obmp-linkstate"
+        ]
+      },
+      "pluginVersion": "8.3.4",
+      "tags": [],
+      "title": "Link State",
+      "type": "dashlist"
     }
   ],
-  "schemaVersion": 30,
+  "schemaVersion": 34,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -174,5 +201,6 @@
   "timezone": "",
   "title": "OBMP-Home",
   "uid": "Kl8Rupn7k",
-  "version": 2
+  "version": 4,
+  "weekStart": ""
 }

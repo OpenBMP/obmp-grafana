@@ -8,20 +8,119 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 19,
-  "iteration": 1629241643024,
+  "id": 15,
+  "iteration": 1643409273231,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "cacheTimeout": null,
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 6,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.4",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(*)\n  FROM ls_nodes where peer_hash_id = '$peer_hash';",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Total Nodes",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -36,18 +135,17 @@
           },
           "decimals": 0,
           "mappings": [],
-          "unit": "none"
+          "unit": "locale"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 6,
         "w": 7,
-        "x": 0,
+        "x": 3,
         "y": 0
       },
-      "id": 4,
-      "interval": null,
+      "id": 8,
       "links": [],
       "maxDataPoints": 3,
       "options": {
@@ -56,8 +154,92 @@
           "displayMode": "table",
           "placement": "right",
           "values": [
-            "value",
-            "percent"
+            "value"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select floor(extract(epoch from max(timestamp))) as time,\n      count(*) as count, \n       CASE WHEN iswithdrawn THEN 'WITHDRAWN' ELSE 'ACTIVE' END as metric\nfrom ls_links\nwhere peer_hash_id = '$peer_hash'\ngroup by iswithdrawn\norder by time\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Link States",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "decimals": 0,
+          "mappings": [],
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 7,
+        "x": 10,
+        "y": 0
+      },
+      "id": 9,
+      "links": [],
+      "maxDataPoints": 3,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "right",
+          "values": [
+            "value"
           ]
         },
         "pieType": "pie",
@@ -78,7 +260,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "select floor(extract(epoch from max(timestamp))) as time,\n       count(*) as value, CASE WHEN iswithdrawn THEN 'WITHDRAWN' ELSE 'ACTIVE' END as metric\nfrom ls_links\nwhere local_node_hash_id = '$local_node_hash_id'\n  AND peer_hash_id = '$peer_hash'\ngroup by iswithdrawn\norder by time\n",
+          "rawSql": "select floor(extract(epoch from max(timestamp))) as time,\n       count(*) as count, \n       CASE WHEN mt_id = 2 THEN 'IPv6' ELSE 'IPv4' END as metric\nfrom ls_links \nwhere peer_hash_id = '$peer_hash'\ngroup by metric\norder by time\n",
           "refId": "A",
           "select": [
             [
@@ -100,106 +282,23 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Link States",
-      "type": "piechart"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "PostgreSQL",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            }
-          },
-          "decimals": 0,
-          "mappings": [],
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 7,
-        "y": 0
-      },
-      "id": 6,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 3,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "right",
-          "values": [
-            "value"
-          ]
-        },
-        "pieType": "pie",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "select floor(extract(epoch from max(timestamp))) as time,\n       count(*) as value, CASE WHEN mt_id = 2 THEN 'IPv6' ELSE 'IPv4' END as metric\nfrom ls_links\nwhere local_node_hash_id = '$local_node_hash_id'\n  AND peer_hash_id = '$peer_hash'\ngroup by mt_id\norder by time\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Links by Type",
       "type": "piechart"
     },
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
-            "displayMode": "auto"
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": true
           },
           "decimals": 0,
           "displayName": "",
@@ -210,10 +309,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -232,31 +327,10 @@
               },
               {
                 "id": "unit",
-                "value": "short"
-              },
-              {
-                "id": "decimals",
-                "value": 2
-              },
-              {
-                "id": "unit",
                 "value": "time: YYYY-MM-DD HH:mm:ss.SSS"
               },
               {
-                "id": "custom.align",
-                "value": null
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "seq"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "locale"
+                "id": "custom.align"
               }
             ]
           },
@@ -266,10 +340,6 @@
               "options": "state"
             },
             "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "color-background-solid"
-              },
               {
                 "id": "mappings",
                 "value": [
@@ -287,29 +357,40 @@
                     "type": "value"
                   }
                 ]
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-background-solid"
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 14,
+        "h": 13,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 6
       },
-      "id": 2,
+      "id": 4,
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "format": "table",
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT state,local_router_name,local_igp_routerid,remote_router_name,remote_igp_routerid,mt_id,igp_metric,protocol, timestamp, seq\n  FROM v_ls_links\n  WHERE local_node_hash_id = '$local_node_hash_id'\n    AND peer_hash_id = '$peer_hash'",
+          "rawSql": "SELECT state, nodename, routerid, protocol, timestamp, seq\n  FROM v_ls_nodes\n  where peer_hash_id = '$peer_hash'\n\n       ",
           "refId": "A",
           "select": [
             [
@@ -331,9 +412,7 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "$local_node_name Links",
+      "title": "Backbone ISIS Nodes",
       "transformations": [
         {
           "id": "merge",
@@ -342,91 +421,53 @@
           }
         }
       ],
-      "transparent": true,
       "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 2,
+      "options": {
+        "content": "\n\n",
+        "mode": "markdown"
+      },
+      "pluginVersion": "8.3.4",
+      "type": "text"
     }
   ],
-  "schemaVersion": 30,
+  "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "obmp-linkstate"
+  ],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": false,
-          "text": "jfk10-wxbb-crt02.webex.com",
-          "value": "43ffa06c-93d2-7fb4-b2f9-5d6197607128"
+          "text": "yyz01-wxbb-crt01-lo0.webex.com",
+          "value": "367c22e4-57d9-2328-654b-96ea750e0267"
         },
-        "datasource": null,
-        "definition": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10\n   ",
-        "description": null,
-        "error": null,
+        "definition": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10\n",
         "hide": 0,
         "includeAll": false,
         "label": "BGP Peer",
         "multi": false,
         "name": "peer_hash",
         "options": [],
-        "query": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10\n   ",
+        "query": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10\n",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "AMS10-WXBB-CRT02",
-          "value": "cf6d7404-8c59-01a8-8c5a-51143f676baa"
-        },
-        "datasource": "PostgreSQL",
-        "definition": "select name as __text, hash_id as __value from ls_nodes where peer_hash_id = '$peer_hash' and not igp_router_id ~ '\\..[1-9A-F]00$'",
-        "description": null,
-        "error": null,
-        "hide": 0,
-        "includeAll": false,
-        "label": "ISIS Node",
-        "multi": false,
-        "name": "local_node_hash_id",
-        "options": [],
-        "query": "select name as __text, hash_id as __value from ls_nodes where peer_hash_id = '$peer_hash' and not igp_router_id ~ '\\..[1-9A-F]00$'",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 5,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {
-          "selected": false,
-          "text": "AMS10-WXBB-CRT02",
-          "value": "AMS10-WXBB-CRT02"
-        },
-        "datasource": "PostgreSQL",
-        "definition": "select name from ls_nodes where hash_id = '$local_node_hash_id' and peer_hash_id = '$peer_hash'",
-        "description": null,
-        "error": null,
-        "hide": 2,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "local_node_name",
-        "options": [],
-        "query": "select name from ls_nodes where hash_id = '$local_node_hash_id' and peer_hash_id = '$peer_hash'",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
         "tagValuesQuery": "",
         "tagsQuery": "",
         "type": "query",
@@ -453,7 +494,8 @@
     ]
   },
   "timezone": "",
-  "title": "LS Links",
-  "uid": "MPqNG_sWz",
-  "version": 9
+  "title": "LS Nodes",
+  "uid": "dzdSWlyWz",
+  "version": 2,
+  "weekStart": ""
 }

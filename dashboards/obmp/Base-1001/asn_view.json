@@ -8,26 +8,35 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 38,
-  "iteration": 1629233349791,
+  "id": 3,
+  "iteration": 1643409069346,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "aliasColors": {},
       "breakPoint": "50%",
-      "cacheTimeout": null,
       "combine": {
         "label": "Others",
         "threshold": 0
       },
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "decimals": 0,
       "fontSize": "80%",
       "format": "none",
@@ -38,7 +47,6 @@
         "y": 0
       },
       "id": 6,
-      "interval": null,
       "legend": {
         "show": true,
         "values": true
@@ -68,8 +76,10 @@
       "valueName": "total"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -110,7 +120,6 @@
         "y": 0
       },
       "id": 11,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -128,7 +137,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
@@ -167,7 +176,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -195,8 +207,6 @@
         "min": true,
         "rightSide": true,
         "show": true,
-        "sort": null,
-        "sortDesc": null,
         "total": false,
         "values": true
       },
@@ -208,7 +218,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "pointradius": 5,
       "points": true,
       "renderer": "flot",
@@ -227,7 +237,6 @@
       "thresholds": [],
       "timeFrom": "24h",
       "timeRegions": [],
-      "timeShift": null,
       "title": "Originating Prefix Trend",
       "tooltip": {
         "shared": true,
@@ -236,9 +245,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -246,29 +253,24 @@
         {
           "decimals": 0,
           "format": "none",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": false
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
-      "cacheTimeout": null,
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -309,7 +311,6 @@
         "y": 4
       },
       "id": 12,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -327,7 +328,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
@@ -362,14 +363,17 @@
       "type": "stat"
     },
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
+            "align": "auto",
             "displayMode": "auto"
           },
           "decimals": 2,
@@ -412,8 +416,7 @@
                 ]
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           }
@@ -428,9 +431,16 @@
       "id": 2,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
@@ -473,14 +483,17 @@
       "type": "table"
     },
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
+            "align": "auto",
             "displayMode": "auto",
             "filterable": true
           },
@@ -514,8 +527,7 @@
                 "value": "none"
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               },
               {
                 "id": "decimals",
@@ -534,9 +546,16 @@
       "id": 8,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
@@ -578,14 +597,17 @@
       "type": "table"
     },
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
+            "align": "auto",
             "displayMode": "auto"
           },
           "decimals": 0,
@@ -622,8 +644,7 @@
                 "value": "time: YYYY-MM-DD HH:mm:ss"
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           },
@@ -638,8 +659,7 @@
                 "value": "none"
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           }
@@ -654,9 +674,16 @@
       "id": 9,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
@@ -698,7 +725,10 @@
       "type": "table"
     },
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -706,7 +736,7 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
+            "align": "auto",
             "displayMode": "auto"
           },
           "decimals": 2,
@@ -753,8 +783,7 @@
                 ]
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           }
@@ -769,9 +798,16 @@
       "id": 15,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
@@ -813,7 +849,10 @@
       "type": "table"
     },
     {
-      "datasource": "PostgreSQL",
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -821,7 +860,7 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": null,
+            "align": "auto",
             "displayMode": "auto"
           },
           "decimals": 0,
@@ -868,8 +907,7 @@
                 ]
               },
               {
-                "id": "custom.align",
-                "value": null
+                "id": "custom.align"
               }
             ]
           }
@@ -884,9 +922,16 @@
       "id": 4,
       "links": [],
       "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
         "showHeader": true
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "8.3.4",
       "targets": [
         {
           "alias": "",
@@ -928,20 +973,19 @@
       "type": "table"
     }
   ],
-  "schemaVersion": 30,
+  "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "obmp-base"
+  ],
   "templating": {
     "list": [
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "714",
           "value": "714"
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "ASN",
@@ -949,7 +993,7 @@
         "name": "asn_num",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "109",
             "value": "109"
           }
@@ -993,5 +1037,6 @@
   "timezone": "",
   "title": "ASN View",
   "uid": "asnview-agg",
-  "version": 11
+  "version": 2,
+  "weekStart": ""
 }

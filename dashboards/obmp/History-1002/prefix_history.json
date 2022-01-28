@@ -22,8 +22,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 13,
-  "iteration": 1643405871637,
+  "id": 9,
+  "iteration": 1643409643563,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -38,6 +38,7 @@
             "mode": "thresholds"
           },
           "custom": {
+            "align": "auto",
             "displayMode": "auto"
           },
           "decimals": 0,
@@ -495,7 +496,9 @@
   "refresh": "",
   "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "obmp-history"
+  ],
   "templating": {
     "list": [
       {

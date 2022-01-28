@@ -21,8 +21,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1643396871031,
+  "id": 5,
+  "iteration": 1643409148930,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -730,7 +730,9 @@
   ],
   "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "obmp-base"
+  ],
   "templating": {
     "list": [
       {
@@ -861,6 +863,6 @@
   "timezone": "",
   "title": "Looking Glass",
   "uid": "lookingglass",
-  "version": 4,
+  "version": 2,
   "weekStart": ""
 }
