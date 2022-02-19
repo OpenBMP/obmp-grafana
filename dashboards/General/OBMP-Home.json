@@ -144,6 +144,35 @@
         "x": 14,
         "y": 3
       },
+      "id": 9,
+      "links": [],
+      "options": {
+        "maxItems": 41,
+        "query": "",
+        "showHeadings": true,
+        "showRecentlyViewed": false,
+        "showSearch": true,
+        "showStarred": false,
+        "tags": [
+          "obmp-l3vpn"
+        ]
+      },
+      "pluginVersion": "8.3.4",
+      "tags": [],
+      "title": "L3VPN",
+      "type": "dashlist"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 5,
+        "x": 19,
+        "y": 3
+      },
       "id": 3,
       "links": [],
       "options": {
@@ -201,6 +230,6 @@
   "timezone": "",
   "title": "OBMP-Home",
   "uid": "Kl8Rupn7k",
-  "version": 4,
+  "version": 2,
   "weekStart": ""
 }
