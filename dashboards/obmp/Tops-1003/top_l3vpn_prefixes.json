@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 21,
-  "iteration": 1645132707620,
+  "iteration": 1645285539793,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -949,13 +949,9 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash) and  recvcapabilities like '% afi=1 safi=128 %';",
         "hide": 0,
