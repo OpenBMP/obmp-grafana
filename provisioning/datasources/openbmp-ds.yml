@@ -34,11 +34,12 @@ datasources:
     jsonData:
       tlsAuth: false
       tlsAuthWithCACert: false
-      postgresVersion: "v12+"
+      postgresVersion: 1200
       sslmode: "require"
       timescaledb: true
       maxOpenConns: 6
-      maxIdleConns: 2
+      maxIdleConns: 1
+      connMaxLifetime: 3600
 
     # <string> json object of data that will be encrypted.
     #secureJsonData:
