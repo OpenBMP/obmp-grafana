@@ -21,8 +21,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 5,
-  "iteration": 1643409148930,
+  "id": 4,
+  "iteration": 1648756489024,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -580,7 +580,7 @@
                   {
                     "targetBlank": true,
                     "title": "Prefix History ",
-                    "url": "/grafana/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-prefix=${__value.text}"
+                    "url": "/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-input=${__value.text}"
                   }
                 ]
               },
@@ -738,8 +738,8 @@
       {
         "current": {
           "selected": false,
-          "text": "3.235.73.1",
-          "value": "3.235.73.1"
+          "text": "188.132.221.0/24",
+          "value": "188.132.221.0/24"
         },
         "hide": 0,
         "label": "Prefix/IP",
@@ -747,11 +747,11 @@
         "options": [
           {
             "selected": true,
-            "text": "3.235.73.1",
-            "value": "3.235.73.1"
+            "text": "188.132.221.0/24",
+            "value": "188.132.221.0/24"
           }
         ],
-        "query": "3.235.73.1",
+        "query": "188.132.221.0/24",
         "queryValue": "50.227.215.188",
         "skipUrlSync": false,
         "type": "textbox"
@@ -813,8 +813,8 @@
       {
         "current": {
           "selected": false,
-          "text": "3.224.0.0/12",
-          "value": "3.224.0.0/12"
+          "text": "188.132.221.0/24",
+          "value": "188.132.221.0/24"
         },
         "definition": "select prefix from ip_rib \nwhere prefix >>= '$input' and peer_hash_id in ($peer_hash) \norder by prefix desc limit 1",
         "hide": 2,

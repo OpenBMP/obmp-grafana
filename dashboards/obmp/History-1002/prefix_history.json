@@ -23,7 +23,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 9,
-  "iteration": 1643409643563,
+  "iteration": 1648757926073,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -581,20 +581,20 @@
       {
         "current": {
           "selected": false,
-          "text": "187.249.2.0/24",
-          "value": "187.249.2.0/24"
+          "text": "188.132.221.0/24",
+          "value": "188.132.221.0/24"
         },
         "hide": 0,
         "label": "Prefix",
         "name": "input",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "187.249.2.0/24",
             "value": "187.249.2.0/24"
           }
         ],
-        "query": "187.249.2.0/24",
+        "query": "188.132.221.0/24",
         "queryValue": "67.211.53.0/24",
         "skipUrlSync": false,
         "type": "textbox"
@@ -602,16 +602,16 @@
       {
         "current": {
           "selected": false,
-          "text": "AND prefix = '187.249.2.0/24'",
-          "value": "AND prefix = '187.249.2.0/24'"
+          "text": "AND prefix = '188.132.221.0/24'",
+          "value": "AND prefix = '188.132.221.0/24'"
         },
-        "definition": "select CASE WHEN '$input' != '-' THEN 'AND prefix = ''' || (select prefix from global_ip_rib where prefix >>= (CASE WHEN '$input' != '-' THEN '$input' ELSE '0/0' END)::inet order by prefix desc limit 1)::text || '''' ELSE '' END;",
+        "definition": "select CASE WHEN '$input' != '-' THEN 'AND prefix = ''' || (select prefix from ip_rib where prefix >>= (CASE WHEN '$input' != '-' THEN '$input' ELSE '0/0' END)::inet order by prefix desc limit 1)::text || '''' ELSE '' END;",
         "hide": 2,
         "includeAll": false,
         "multi": false,
         "name": "prefix_clause",
         "options": [],
-        "query": "select CASE WHEN '$input' != '-' THEN 'AND prefix = ''' || (select prefix from global_ip_rib where prefix >>= (CASE WHEN '$input' != '-' THEN '$input' ELSE '0/0' END)::inet order by prefix desc limit 1)::text || '''' ELSE '' END;",
+        "query": "select CASE WHEN '$input' != '-' THEN 'AND prefix = ''' || (select prefix from ip_rib where prefix >>= (CASE WHEN '$input' != '-' THEN '$input' ELSE '0/0' END)::inet order by prefix desc limit 1)::text || '''' ELSE '' END;",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
