@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -23,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 9,
-  "iteration": 1648757926073,
+  "iteration": 1654877575695,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -39,7 +42,8 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "inspect": false
           },
           "decimals": 0,
           "displayName": "",
@@ -96,7 +100,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "format": "table",
@@ -181,7 +185,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -298,7 +302,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -370,6 +374,10 @@
       }
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -378,7 +386,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -458,7 +467,7 @@
           }
         ]
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -494,7 +503,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "obmp-history"
@@ -506,6 +515,10 @@
           "selected": false,
           "text": "All",
           "value": "$__all"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
         },
         "definition": "select name as __text, hash_id as __value from routers where state = 'up'\n",
         "hide": 0,
@@ -531,14 +544,18 @@
             "$__all"
           ]
         },
-        "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash) and peer_state = 'up'",
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
+        "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash) ",
         "hide": 0,
         "includeAll": true,
         "label": "Peer",
         "multi": true,
         "name": "peer_hash",
         "options": [],
-        "query": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash) and peer_state = 'up'",
+        "query": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash) ",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -581,20 +598,20 @@
       {
         "current": {
           "selected": false,
-          "text": "188.132.221.0/24",
-          "value": "188.132.221.0/24"
+          "text": "187.249.2.0/24",
+          "value": "187.249.2.0/24"
         },
         "hide": 0,
         "label": "Prefix",
         "name": "input",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "187.249.2.0/24",
             "value": "187.249.2.0/24"
           }
         ],
-        "query": "188.132.221.0/24",
+        "query": "187.249.2.0/24",
         "queryValue": "67.211.53.0/24",
         "skipUrlSync": false,
         "type": "textbox"
@@ -602,16 +619,20 @@
       {
         "current": {
           "selected": false,
-          "text": "AND prefix = '188.132.221.0/24'",
-          "value": "AND prefix = '188.132.221.0/24'"
+          "text": "AND prefix = '187.249.2.0/24'",
+          "value": "AND prefix = '187.249.2.0/24'"
         },
-        "definition": "select CASE WHEN '$input' != '-' THEN 'AND prefix = ''' || (select prefix from ip_rib where prefix >>= (CASE WHEN '$input' != '-' THEN '$input' ELSE '0/0' END)::inet order by prefix desc limit 1)::text || '''' ELSE '' END;",
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
+        "definition": "select CASE WHEN '$input' != '-' THEN 'AND prefix = ''' || (select prefix from global_ip_rib where prefix >>= (CASE WHEN '$input' != '-' THEN '$input' ELSE '0/0' END)::inet order by prefix desc limit 1)::text || '''' ELSE '' END;",
         "hide": 2,
         "includeAll": false,
         "multi": false,
         "name": "prefix_clause",
         "options": [],
-        "query": "select CASE WHEN '$input' != '-' THEN 'AND prefix = ''' || (select prefix from ip_rib where prefix >>= (CASE WHEN '$input' != '-' THEN '$input' ELSE '0/0' END)::inet order by prefix desc limit 1)::text || '''' ELSE '' END;",
+        "query": "select CASE WHEN '$input' != '-' THEN 'AND prefix = ''' || (select prefix from global_ip_rib where prefix >>= (CASE WHEN '$input' != '-' THEN '$input' ELSE '0/0' END)::inet order by prefix desc limit 1)::text || '''' ELSE '' END;",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,

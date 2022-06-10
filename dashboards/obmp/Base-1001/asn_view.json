@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -22,7 +25,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 3,
-  "iteration": 1643409069346,
+  "iteration": 1654876929746,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -137,7 +140,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -218,7 +221,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "pointradius": 5,
       "points": true,
       "renderer": "flot",
@@ -328,7 +331,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -374,7 +377,8 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "inspect": false
           },
           "decimals": 2,
           "displayName": "",
@@ -440,7 +444,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -495,7 +499,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "decimals": 2,
           "displayName": "",
@@ -555,7 +560,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -608,7 +613,8 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "inspect": false
           },
           "decimals": 0,
           "displayName": "",
@@ -683,7 +689,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -737,7 +743,8 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "inspect": false
           },
           "decimals": 2,
           "displayName": "",
@@ -807,7 +814,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -861,7 +868,8 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "inspect": false
           },
           "decimals": 0,
           "displayName": "",
@@ -902,7 +910,7 @@
                   {
                     "targetBlank": true,
                     "title": "Click for Looking Glass",
-                    "url": "/grafana/d/lookingglass-global/looking-glass-global?orgId=1&var-prefix=${__cell}"
+                    "url": "d/lookingglass/looking-glass?orgId=1&var-input=${__value.text}&var-prefix=${__value.text}"
                   }
                 ]
               },
@@ -931,7 +939,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -973,7 +981,7 @@
       "type": "table"
     }
   ],
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "obmp-base"
@@ -1037,6 +1045,6 @@
   "timezone": "",
   "title": "ASN View",
   "uid": "asnview-agg",
-  "version": 2,
+  "version": 5,
   "weekStart": ""
 }

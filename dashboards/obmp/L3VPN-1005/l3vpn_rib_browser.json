@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,12 +24,16 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 19,
-  "iteration": 1645285574909,
+  "id": 21,
+  "iteration": 1654877634754,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -44,7 +51,10 @@
               "tooltip": false,
               "viz": false
             },
-            "lineWidth": 1
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            }
           },
           "decimals": 0,
           "displayName": "Routes",
@@ -70,6 +80,7 @@
       },
       "id": 5,
       "options": {
+        "barRadius": 0,
         "barWidth": 0.97,
         "groupWidth": 0.7,
         "legend": {
@@ -83,9 +94,11 @@
         "showValue": "always",
         "stacking": "none",
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         },
-        "xTickLabelRotation": 0
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
       },
       "pluginVersion": "8.3.4",
       "targets": [
@@ -126,6 +139,10 @@
       "type": "barchart"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -143,7 +160,10 @@
               "tooltip": false,
               "viz": false
             },
-            "lineWidth": 1
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            }
           },
           "decimals": 0,
           "displayName": "Routes",
@@ -194,6 +214,7 @@
       },
       "id": 6,
       "options": {
+        "barRadius": 0,
         "barWidth": 0.97,
         "groupWidth": 0.7,
         "legend": {
@@ -207,9 +228,11 @@
         "showValue": "always",
         "stacking": "none",
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         },
-        "xTickLabelRotation": 0
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
       },
       "pluginVersion": "8.3.4",
       "targets": [
@@ -250,6 +273,10 @@
       "type": "barchart"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -258,7 +285,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "decimals": 0,
           "displayName": "",
@@ -419,7 +447,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -466,7 +494,7 @@
       "type": "table"
     }
   ],
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "obmp-l3vpn"
@@ -482,6 +510,10 @@
           "value": [
             "$__all"
           ]
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
         },
         "definition": "select routername as __text, router_hash_id as __value from v_peers where router_state = 'up' and  recvcapabilities like '% afi=1 safi=128 %';",
         "hide": 0,
@@ -502,9 +534,14 @@
       },
       {
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "4.4.4.4",
-          "value": "31961fb4-0169-8177-b4da-e0745346efe5"
+          "text": "None",
+          "value": ""
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
         },
         "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash) and  recvcapabilities like '% afi=1 safi=128 %';",
         "hide": 0,
@@ -660,6 +697,6 @@
   "timezone": "",
   "title": "L3VPN RIB Browser",
   "uid": "v-cdzIBnz",
-  "version": 23,
+  "version": 1,
   "weekStart": ""
 }

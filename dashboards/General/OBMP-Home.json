@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -42,7 +45,7 @@
         "content": "# OpenBMP\n\n*Select a dashboard*",
         "mode": "markdown"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "type": "text"
     },
     {
@@ -59,7 +62,6 @@
       "id": 7,
       "links": [],
       "options": {
-        "folderUid": "1003",
         "maxItems": 41,
         "query": "",
         "showHeadings": true,
@@ -70,7 +72,7 @@
           "obmp-tops"
         ]
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "tags": [],
       "title": "Tops",
       "type": "dashlist"
@@ -99,7 +101,7 @@
           "obmp-base"
         ]
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "tags": [],
       "title": "Base",
       "type": "dashlist"
@@ -128,7 +130,7 @@
           "obmp-history"
         ]
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "tags": [],
       "title": "Prefix History",
       "type": "dashlist"
@@ -157,7 +159,7 @@
           "obmp-l3vpn"
         ]
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "tags": [],
       "title": "L3VPN",
       "type": "dashlist"
@@ -186,13 +188,13 @@
           "obmp-linkstate"
         ]
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "tags": [],
       "title": "Link State",
       "type": "dashlist"
     }
   ],
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -230,6 +232,6 @@
   "timezone": "",
   "title": "OBMP-Home",
   "uid": "obmp-home",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

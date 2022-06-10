@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,8 +24,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 15,
-  "iteration": 1643409273231,
+  "id": 16,
+  "iteration": 1654877745288,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -84,7 +87,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "format": "table",
@@ -166,7 +169,8 @@
           "values": false
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -251,7 +255,8 @@
           "values": false
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -298,7 +303,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "decimals": 0,
           "displayName": "",
@@ -383,7 +389,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "format": "table",
@@ -439,11 +445,11 @@
         "content": "\n\n",
         "mode": "markdown"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "type": "text"
     }
   ],
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "obmp-linkstate"
@@ -455,6 +461,10 @@
           "selected": false,
           "text": "yyz01-wxbb-crt01-lo0.webex.com",
           "value": "367c22e4-57d9-2328-654b-96ea750e0267"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
         },
         "definition": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10\n",
         "hide": 0,
@@ -496,6 +506,6 @@
   "timezone": "",
   "title": "LS Nodes",
   "uid": "dzdSWlyWz",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }

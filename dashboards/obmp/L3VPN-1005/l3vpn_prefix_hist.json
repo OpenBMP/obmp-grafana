@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -23,11 +26,15 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 20,
-  "iteration": 1645285608322,
+  "iteration": 1654877670071,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -35,7 +42,8 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "inspect": false
           },
           "decimals": 0,
           "displayName": "",
@@ -92,7 +100,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "datasource": {
@@ -142,6 +150,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -178,7 +190,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -257,6 +269,10 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -295,7 +311,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -371,6 +387,10 @@
       }
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -379,7 +399,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -477,7 +498,7 @@
           }
         ]
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -517,7 +538,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "obmp-l3vpn"
@@ -529,6 +550,10 @@
           "selected": false,
           "text": "All",
           "value": "$__all"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
         },
         "definition": "select routername as __text, router_hash_id as __value from v_peers where router_state = 'up' and recvcapabilities like '% afi=1 safi=128 %';\n",
         "hide": 0,
@@ -554,14 +579,18 @@
             "$__all"
           ]
         },
-        "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash) and peer_state = 'up' and recvcapabilities like '% afi=1 safi=128 %';",
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
+        "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash)  and recvcapabilities like '% afi=1 safi=128 %';",
         "hide": 0,
         "includeAll": true,
         "label": "Peer",
         "multi": true,
         "name": "peer_hash",
         "options": [],
-        "query": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash) and peer_state = 'up' and recvcapabilities like '% afi=1 safi=128 %';",
+        "query": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash)  and recvcapabilities like '% afi=1 safi=128 %';",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -634,9 +663,14 @@
       },
       {
         "current": {
+          "isNone": true,
           "selected": false,
-          "text": "AND prefix = '100.100.100.100/32'",
-          "value": "AND prefix = '100.100.100.100/32'"
+          "text": "None",
+          "value": ""
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
         },
         "definition": "select CASE WHEN '$input' != '-' THEN 'AND prefix = ''' || (\n               select prefix from l3vpn_rib \n                   where peer_hash_id in ($peer_hash) \n                           AND    ('$rd' = '-' OR rd = '$rd')\n                           AND prefix >>= (CASE WHEN '$input' != '-' THEN '$input' ELSE '0/0' END)::inet order by prefix desc limit 1)::text || ''''\n                                                        ELSE '' END;",
         "hide": 2,
@@ -708,6 +742,6 @@
   "timezone": "",
   "title": "Prefix History (by Prefix) L3VPN",
   "uid": "l3vpn-prefix-hist",
-  "version": 11,
+  "version": 2,
   "weekStart": ""
 }

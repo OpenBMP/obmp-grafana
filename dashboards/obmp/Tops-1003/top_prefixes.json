@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,12 +24,16 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 11,
-  "iteration": 1643408840193,
+  "id": 12,
+  "iteration": 1654876366831,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -98,7 +105,8 @@
           "placement": "right"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.5",
@@ -140,6 +148,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -198,7 +210,7 @@
         "x": 0,
         "y": 6
       },
-      "id": 4,
+      "id": 13,
       "interval": "15m",
       "links": [],
       "options": {
@@ -211,7 +223,8 @@
           "placement": "right"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.5",
@@ -227,7 +240,7 @@
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n    sum(updates),\n    p.PeerName as metric\n  FROM stats_chg_bypeer l\n  JOIN v_peers p ON (p.peer_hash_id = l.peer_hash_id)\n  WHERE $__timeFilter(interval_time)\n     AND l.peer_hash_id in ($peer_hash)\n  GROUP BY peername,time\n  order by time asc\n",
+          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n    sum(updates),\n    p.routername as metric\n  FROM stats_chg_bypeer l\n  JOIN v_peers p ON (p.peer_hash_id = l.peer_hash_id)\n  WHERE $__timeFilter(interval_time)\n     AND l.peer_hash_id in ($peer_hash)\n  GROUP BY routername,time\n  order by time asc\n",
           "refId": "A",
           "select": [
             [
@@ -249,10 +262,14 @@
           ]
         }
       ],
-      "title": "Updates by Peer",
+      "title": "Updates by Router",
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -323,7 +340,243 @@
           "placement": "right"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
+          "format": "time_series",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n    sum(withdraws),\n    p.routername as metric\n  FROM stats_chg_bypeer l\n  JOIN v_peers p ON (p.peer_hash_id = l.peer_hash_id)\n  WHERE $__timeFilter(interval_time)\n     AND l.peer_hash_id in ($peer_hash)\n  group by routername,time\n  order by time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Withdraws  by Peer",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Count of Updates",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 13
+      },
+      "id": 4,
+      "interval": "15m",
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "8.0.5",
+      "targets": [
+        {
+          "alias": "",
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
+          "format": "time_series",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n    $__timeGroup(interval_time, $__interval) as time,\n    sum(updates),\n    p.PeerName as metric\n  FROM stats_chg_bypeer l\n  JOIN v_peers p ON (p.peer_hash_id = l.peer_hash_id)\n  WHERE $__timeFilter(interval_time)\n     AND l.peer_hash_id in ($peer_hash)\n  GROUP BY peername,time\n  order by time asc\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Updates by Peer",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Count of Updates",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "locale"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 13
+      },
+      "id": 14,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.0.5",
@@ -365,6 +618,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -372,7 +629,8 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "inspect": false
           },
           "links": [],
           "mappings": [],
@@ -423,8 +681,8 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Prefix History",
-                    "url": "/grafana/d/score-by-origin/clients-score-by-origin-asn?orgId=1&var-input=${__value.text}&${__url_time_range}"
+                    "title": "ASN Info",
+                    "url": "/d/asnview-agg/asn-view?orgId=1&var-asn_num=${__value.text}&${__url_time_range}"
                   }
                 ]
               },
@@ -452,7 +710,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 13
+        "y": 20
       },
       "id": 10,
       "links": [],
@@ -467,7 +725,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -506,6 +764,10 @@
       "type": "table"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -513,7 +775,8 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "inspect": false
           },
           "links": [],
           "mappings": [],
@@ -564,8 +827,8 @@
                 "value": [
                   {
                     "targetBlank": true,
-                    "title": "Prefix History",
-                    "url": "/grafana/d/score-by-origin/clients-score-by-origin-asn?orgId=1&var-input=${__value.text}&${__url_time_range}"
+                    "title": "ASN Info",
+                    "url": "/d/asnview-agg/asn-view?orgId=1&var-asn_num=${__value.text}&${__url_time_range}"
                   }
                 ]
               },
@@ -593,7 +856,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 13
+        "y": 20
       },
       "id": 11,
       "links": [],
@@ -608,7 +871,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -647,6 +910,10 @@
       "type": "table"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -654,7 +921,8 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "inspect": false
           },
           "links": [],
           "mappings": [],
@@ -662,8 +930,7 @@
             "mode": "percentage",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "#EAB839",
@@ -710,7 +977,7 @@
                   {
                     "targetBlank": true,
                     "title": "Prefix History",
-                    "url": "/grafana/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-prefix=${__value.text}&${__url_time_range}"
+                    "url": "/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-router_hash=All&var-peer_hash=All&var-limit=1000&var-input=${__value.text}&${__url_time_range}"
                   }
                 ]
               }
@@ -766,7 +1033,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 20
+        "y": 27
       },
       "id": 2,
       "links": [],
@@ -781,7 +1048,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.2",
       "targets": [
         {
           "alias": "",
@@ -794,7 +1061,7 @@
           "hide": false,
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT as_name as \"AS Name\", irr_descr as \"Desc\",r.recv_origin_as as origin_as,d.* FROM (\nSELECT\n    prefix,\n    sum(updates) as \"Updates\"\n  FROM stats_chg_byprefix l\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id in ($peer_hash)\n  GROUP BY prefix\n  order by \"Updates\" desc\nLIMIT 60\n) d\nJOIN global_ip_rib r ON (r.prefix = d.prefix)\n--LEFT JOIN info_route ir ON (ir.prefix = d.prefix)\nLEFT JOIN info_asn i ON (i.asn = r.recv_origin_as)",
+          "rawSql": "SELECT as_name as \"AS Name\", irr_descr as \"Desc\",r.recv_origin_as as origin_as,d.* FROM (\nSELECT\n    prefix,\n    sum(updates) as \"Updates\"\n  FROM stats_chg_byprefix l\n  WHERE $__timeFilter(interval_time)\n      AND peer_hash_id in ($peer_hash)\n  GROUP BY prefix\n  order by \"Updates\" desc\nLIMIT 60\n) d\nJOIN global_ip_rib r ON (r.prefix = d.prefix)\nLEFT JOIN info_asn i ON (i.asn = r.recv_origin_as)",
           "refId": "A",
           "select": [
             [
@@ -820,6 +1087,10 @@
       "type": "table"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -827,7 +1098,8 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto"
+            "displayMode": "auto",
+            "inspect": false
           },
           "links": [],
           "mappings": [],
@@ -835,8 +1107,7 @@
             "mode": "percentage",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "#EAB839",
@@ -883,7 +1154,7 @@
                   {
                     "targetBlank": true,
                     "title": "Prefix History",
-                    "url": "/grafana/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-prefix=${__value.text}&${__url_time_range}"
+                    "url": "/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-router_hash=All&var-peer_hash=All&var-limit=1000&var-input=${__value.text}&${__url_time_range}"
                   }
                 ]
               }
@@ -939,7 +1210,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 20
+        "y": 27
       },
       "id": 12,
       "links": [],
@@ -954,7 +1225,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.2",
       "targets": [
         {
           "alias": "",
@@ -994,7 +1265,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "obmp-tops"
@@ -1038,6 +1309,10 @@
           "selected": false,
           "text": "All",
           "value": "$__all"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
         },
         "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash)",
         "hide": 0,
@@ -1087,6 +1362,6 @@
   "timezone": "utc",
   "title": "Top by Prefixes",
   "uid": "e_cJJzxnk",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }

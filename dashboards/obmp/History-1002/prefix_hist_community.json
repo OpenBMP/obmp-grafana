@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -22,7 +25,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 8,
-  "iteration": 1643409602198,
+  "iteration": 1654877613886,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -39,7 +42,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -190,7 +194,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -225,7 +229,7 @@
       "type": "table"
     }
   ],
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "obmp-history"
@@ -260,6 +264,10 @@
           "text": "All",
           "value": "$__all"
         },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
         "definition": "select name as __text, hash_id as __value from routers where state = 'up'",
         "hide": 0,
         "includeAll": true,
@@ -280,14 +288,18 @@
           "text": "All",
           "value": "$__all"
         },
-        "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash) and peer_state = 'up'",
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
+        "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash)",
         "hide": 0,
         "includeAll": true,
         "label": "Peer",
         "multi": true,
         "name": "peer_hash",
         "options": [],
-        "query": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash) and peer_state = 'up'",
+        "query": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,

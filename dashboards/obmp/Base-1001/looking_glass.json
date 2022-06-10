@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,8 +24,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1648756489024,
+  "id": 5,
+  "iteration": 1654877090626,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -42,7 +45,7 @@
         "content": "# Looking Glass\n\n> Enter an IP address with or without bit length.  The longest matched prefix will be used. Specify the length to find exact match or best aggregate.",
         "mode": "markdown"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "type": "text"
     },
     {
@@ -53,6 +56,10 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "decimals": 0,
       "esMetric": "Count",
       "gridPos": {
@@ -124,6 +131,10 @@
       "valueName": "current"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "description": "Prefix found in router's RIB.",
       "fieldConfig": {
         "defaults": {
@@ -171,7 +182,8 @@
           "values": false
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -212,6 +224,10 @@
       "type": "piechart"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "description": "Prefix found in peer RIB's",
       "fieldConfig": {
         "defaults": {
@@ -259,7 +275,8 @@
           "values": false
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -301,6 +318,10 @@
     },
     {
       "columns": [],
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 6,
@@ -396,6 +417,10 @@
     },
     {
       "columns": [],
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fontSize": "100%",
       "gridPos": {
         "h": 4,
@@ -512,6 +537,10 @@
       "type": "table-old"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -520,7 +549,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "decimals": 0,
           "displayName": "",
@@ -580,7 +610,7 @@
                   {
                     "targetBlank": true,
                     "title": "Prefix History ",
-                    "url": "/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-input=${__value.text}"
+                    "url": "/d/prefix-hist/prefix-history-by-prefix?orgId=1&var-prefix=${__value.text}&var-input=${__value.text}"
                   }
                 ]
               },
@@ -609,7 +639,7 @@
                   {
                     "targetBlank": true,
                     "title": "ASN View",
-                    "url": "/grafana/d/asnview/asn-view?orgId=1&var-asn_num=${__value.text}"
+                    "url": "d/asnview-agg/asn-view?orgId=1&var-asn_num=${__value.text}"
                   }
                 ]
               },
@@ -681,7 +711,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "alias": "",
@@ -728,7 +758,7 @@
       "type": "table"
     }
   ],
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "obmp-base"
@@ -738,20 +768,20 @@
       {
         "current": {
           "selected": false,
-          "text": "188.132.221.0/24",
-          "value": "188.132.221.0/24"
+          "text": "17.44.224.0/22",
+          "value": "17.44.224.0/22"
         },
         "hide": 0,
         "label": "Prefix/IP",
         "name": "input",
         "options": [
           {
-            "selected": true,
-            "text": "188.132.221.0/24",
-            "value": "188.132.221.0/24"
+            "selected": false,
+            "text": "3.235.73.1",
+            "value": "3.235.73.1"
           }
         ],
-        "query": "188.132.221.0/24",
+        "query": "17.44.224.0/22",
         "queryValue": "50.227.215.188",
         "skipUrlSync": false,
         "type": "textbox"
@@ -765,6 +795,10 @@
           "value": [
             "$__all"
           ]
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
         },
         "definition": "select name as __text, hash_id as __value from routers where state = 'up'",
         "hide": 0,
@@ -793,6 +827,10 @@
             "$__all"
           ]
         },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
         "definition": "select peername as __text, peer_hash_id as __value from v_peers where router_hash_id in ($router_hash)",
         "hide": 0,
         "includeAll": true,
@@ -813,8 +851,12 @@
       {
         "current": {
           "selected": false,
-          "text": "188.132.221.0/24",
-          "value": "188.132.221.0/24"
+          "text": "17.44.224.0/22",
+          "value": "17.44.224.0/22"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
         },
         "definition": "select prefix from ip_rib \nwhere prefix >>= '$input' and peer_hash_id in ($peer_hash) \norder by prefix desc limit 1",
         "hide": 2,
@@ -863,6 +905,6 @@
   "timezone": "",
   "title": "Looking Glass",
   "uid": "lookingglass",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }

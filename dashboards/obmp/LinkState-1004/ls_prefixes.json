@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,8 +24,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 16,
-  "iteration": 1643409409873,
+  "id": 17,
+  "iteration": 1654877763755,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -76,7 +79,8 @@
           "values": false
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -111,6 +115,10 @@
       "type": "piechart"
     },
     {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -119,7 +127,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": true
+            "filterable": true,
+            "inspect": false
           },
           "decimals": 0,
           "displayName": "",
@@ -208,7 +217,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "8.5.4",
       "targets": [
         {
           "datasource": {
@@ -253,7 +262,7 @@
       "type": "table"
     }
   ],
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "obmp-linkstate"
@@ -265,6 +274,10 @@
           "selected": false,
           "text": "yyz01-wxbb-crt01-lo0.webex.com",
           "value": "367c22e4-57d9-2328-654b-96ea750e0267"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
         },
         "definition": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10",
         "hide": 0,
@@ -285,7 +298,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "BLR03-WXBB-CRT01",
           "value": "4275c83a-8d03-5361-d890-0b2bf4ad1b91"
         },
@@ -359,6 +372,6 @@
   "timezone": "",
   "title": "LS Prefixes",
   "uid": "iEcqtlyWk",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }
