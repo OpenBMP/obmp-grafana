@@ -1,0 +1,216 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 23,
+  "iteration": 1654877522167,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "obmp_postgres"
+      },
+      "gridPos": {
+        "h": 28,
+        "w": 23,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select local_node_hash_id as id,\n        CASE WHEN max(local_router_name) = '' THEN max(local_igp_routerid) ELSE max(local_router_name) END as title,\n        max(local_igp_routerid) as detail__routerid\n    from v_ls_links\n  where peer_hash_id = '$peer_hash'\n        and local_igp_routerid like '%.0000' and remote_igp_routerid like '%.0000'\n        and igp_metric < 16000000\n        and state in ($state)\n        and (local_node_hash_id = '$local_node_hash' or remote_node_hash_id = '$local_node_hash')\n    group by local_node_hash_id\n    order by title;",
+          "refId": " nodes",
+          "select": [
+            [
+              {
+                "params": [
+                  "amr_rx_hbhloss_pct"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "as_path_metrics",
+          "timeColumn": "start_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        },
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "obmp_postgres"
+          },
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "select local_node_hash_id || '->' || remote_node_hash_id as id,\n        local_node_hash_id as source,\n        remote_node_hash_id as target,\n        max(igp_metric)::int as mainstat,\n        max(state) as secondarystat,\n        max(remote_router_name) as detail__remote\n    from v_ls_links\n    where peer_hash_id = '$peer_hash'\n        and local_igp_routerid like '%.0000' and remote_igp_routerid like '%.0000'\n        and igp_metric < 16000000\n        and state in ($state)\n        and (local_node_hash_id = '$local_node_hash' or remote_node_hash_id = '$local_node_hash')\ngroup by local_node_hash_id,remote_node_hash_id;\n    ",
+          "refId": "edges",
+          "select": [
+            [
+              {
+                "params": [
+                  "amr_rx_hbhloss_pct"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "as_path_metrics",
+          "timeColumn": "start_timestamp",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Topology",
+      "type": "nodeGraph"
+    }
+  ],
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [
+    "obmp-linkstate"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "yyz01-wxbb-crt01-lo0.webex.com",
+          "value": "367c22e4-57d9-2328-654b-96ea750e0267"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
+        "definition": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10",
+        "hide": 0,
+        "includeAll": false,
+        "label": "BGP Peer",
+        "multi": false,
+        "name": "peer_hash",
+        "options": [],
+        "query": "SELECT __text,__value FROM (\n    select peername as __text, peer_hash_id as __value, count(*) as count\n    from v_ls_nodes\n   group by peername,peer_hash_id) d\nwhere count > 10",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "Active",
+          "value": "ACTIVE"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "State",
+        "multi": false,
+        "name": "state",
+        "options": [
+          {
+            "selected": false,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "Inactive",
+            "value": "WITHDRAWN"
+          },
+          {
+            "selected": true,
+            "text": "Active",
+            "value": "ACTIVE"
+          }
+        ],
+        "query": "Inactive : WITHDRAWN, Active : ACTIVE",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "NRT02-WXBB-CRT01",
+          "value": "3e96d517-e4b8-7264-1479-2814e9691f10"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "obmp_postgres"
+        },
+        "definition": "select local_router_name as __text, local_node_hash_id as __value \nfrom v_ls_links\nwhere peer_hash_id = '$peer_hash'\n        and local_igp_routerid like '%.0000'\n        and igp_metric < 16000000\n        and state in ($state)\ngroup by local_router_name,local_node_hash_id",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Node",
+        "multi": false,
+        "name": "local_node_hash",
+        "options": [],
+        "query": "select local_router_name as __text, local_node_hash_id as __value \nfrom v_ls_links\nwhere peer_hash_id = '$peer_hash'\n        and local_igp_routerid like '%.0000'\n        and igp_metric < 16000000\n        and state in ($state)\ngroup by local_router_name,local_node_hash_id",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "LinkState Topology",
+  "uid": "SNOLrQlnz",
+  "version": 3,
+  "weekStart": ""
+}
