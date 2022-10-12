@@ -26,7 +26,6 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 20,
-  "iteration": 1654877670071,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -100,7 +99,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.5.4",
+      "pluginVersion": "9.1.7",
       "targets": [
         {
           "datasource": {
@@ -190,7 +189,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.5.4",
+      "pluginVersion": "9.1.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -311,7 +310,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.5.4",
+      "pluginVersion": "9.1.7",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -498,7 +497,7 @@
           }
         ]
       },
-      "pluginVersion": "8.5.4",
+      "pluginVersion": "9.1.7",
       "targets": [
         {
           "alias": "",
@@ -538,7 +537,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 36,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [
     "obmp-l3vpn"
@@ -555,14 +554,14 @@
           "type": "postgres",
           "uid": "obmp_postgres"
         },
-        "definition": "select routername as __text, router_hash_id as __value from v_peers where router_state = 'up' and recvcapabilities like '% afi=1 safi=128 %';\n",
+        "definition": "select routername as __text, router_hash_id as __value from v_peers where recvcapabilities like '% afi=1 safi=128 %';\n",
         "hide": 0,
         "includeAll": true,
         "label": "Router",
         "multi": true,
         "name": "router_hash",
         "options": [],
-        "query": "select routername as __text, router_hash_id as __value from v_peers where router_state = 'up' and recvcapabilities like '% afi=1 safi=128 %';\n",
+        "query": "select routername as __text, router_hash_id as __value from v_peers where recvcapabilities like '% afi=1 safi=128 %';\n",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -663,9 +662,8 @@
       },
       {
         "current": {
-          "isNone": true,
           "selected": false,
-          "text": "None",
+          "text": "",
           "value": ""
         },
         "datasource": {

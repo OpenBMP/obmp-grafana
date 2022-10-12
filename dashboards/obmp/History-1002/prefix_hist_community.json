@@ -25,7 +25,6 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 8,
-  "iteration": 1654877613886,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -194,7 +193,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.5.4",
+      "pluginVersion": "9.1.7",
       "targets": [
         {
           "alias": "",
@@ -229,7 +228,7 @@
       "type": "table"
     }
   ],
-  "schemaVersion": 36,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [
     "obmp-history"
@@ -268,14 +267,14 @@
           "type": "postgres",
           "uid": "obmp_postgres"
         },
-        "definition": "select name as __text, hash_id as __value from routers where state = 'up'",
+        "definition": "select name as __text, hash_id as __value from routers",
         "hide": 0,
         "includeAll": true,
         "label": "Router",
         "multi": true,
         "name": "router_hash",
         "options": [],
-        "query": "select name as __text, hash_id as __value from routers where state = 'up'",
+        "query": "select name as __text, hash_id as __value from routers",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,

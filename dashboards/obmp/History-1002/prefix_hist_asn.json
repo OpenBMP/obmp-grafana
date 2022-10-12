@@ -25,7 +25,6 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 7,
-  "iteration": 1654877595982,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -40,6 +39,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -102,7 +103,8 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -157,6 +159,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -220,7 +224,8 @@
             "sum"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "right",
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -449,7 +454,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "8.5.4",
+      "pluginVersion": "9.1.7",
       "targets": [
         {
           "alias": "",
@@ -489,7 +494,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 36,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [
     "obmp-history"
@@ -558,14 +563,14 @@
           "type": "postgres",
           "uid": "obmp_postgres"
         },
-        "definition": "select name as __text, hash_id as __value from routers where state = 'up'",
+        "definition": "select name as __text, hash_id as __value from routers",
         "hide": 0,
         "includeAll": true,
         "label": "Router",
         "multi": true,
         "name": "router_hash",
         "options": [],
-        "query": "select name as __text, hash_id as __value from routers where state = 'up'",
+        "query": "select name as __text, hash_id as __value from routers",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
